@@ -5,28 +5,20 @@ public class GUIController : MonoBehaviour
 {
     public CellGrid CellGrid;
 	
-    void Awake()
-    { 
+    void Awake(){ 
         CellGrid.LevelLoading += onLevelLoading;
         CellGrid.LevelLoadingDone += onLevelLoadingDone;
     }
 
-    private void onLevelLoading(object sender, EventArgs e)
-    {
+    private void onLevelLoading(object sender, EventArgs e){
         Debug.Log("Level is loading");
     }
 
-    private void onLevelLoadingDone(object sender, EventArgs e)
-    {
+    private void onLevelLoadingDone(object sender, EventArgs e){
         Debug.Log("Level loading done");
-        Debug.Log("Press 'n' to end turn");
     }
 
-    void Update ()
-    {
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            CellGrid.EndTurn();//User ends his turn by pressing "n" on keyboard.
-        }
-	}
+    public void NotifyEndTurn() {
+        CellGrid.EndTurn();
+    }
 }

@@ -3,21 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TestSquare : Square
-{
+public class TestSquare : Square{
+
+    [SerializeField]
+    private Color m_highlightedColor;
+    [SerializeField]
+    private Color m_pathColor;
+    [SerializeField]
+    private Color m_reachableColor;
+
+    private SpriteRenderer renderer;
+    private Color m_defaultColor;
+    
+
+    
+    public void Start() {
+        renderer = GetComponent<SpriteRenderer>();
+        m_defaultColor = renderer.color;
+    }
+    
+
     public override Vector3 GetCellDimensions() {
-        return GetComponent<Renderer>().bounds.size;
+        return GetComponent<SpriteRenderer>().bounds.size;
     }
     public override void MarkAsHighlighted() {
-        GetComponent<Renderer>().material.color = new Color(0.75f, 0.75f, 0.75f);
+        renderer.color = m_highlightedColor;
     }
     public override void MarkAsPath() {
-        GetComponent<Renderer>().material.color = Color.green;
+        renderer.color = m_pathColor;
     }
     public override void MarkAsReachable() {
-        GetComponent<Renderer>().material.color = Color.yellow;
+        renderer.color = m_reachableColor;
     }
     public override void UnMark() {
-        GetComponent<Renderer>().material.color = Color.white;
+        renderer.color = m_defaultColor;
     }
 }
