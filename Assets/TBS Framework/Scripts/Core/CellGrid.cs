@@ -167,13 +167,17 @@ public class CellGrid : MonoBehaviour
             UnitAdded.Invoke(this, new UnitCreatedEventArgs(unit)); 
     }
 
+    protected void OnGameStarted(EventArgs e) {
+        if (GameStarted != null)
+            GameStarted.Invoke(this, e);
+    }
+
     /// <summary>
     /// Method is called once, at the beggining of the game.
     /// </summary>
-    public void StartGame()
+    public virtual void StartGame()
     {
-        if(GameStarted != null)
-            GameStarted.Invoke(this, new EventArgs());
+        OnGameStarted(new EventArgs());
 
         Units.FindAll(u => u.PlayerNumber.Equals(CurrentPlayerNumber)).ForEach(u => { u.OnTurnStart(); });
         Players.Find(p => p.PlayerNumber.Equals(CurrentPlayerNumber)).Play(this);
