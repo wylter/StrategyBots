@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class CustomUnit : Unit{
 
-    [SerializeField]
-    private float rotationSpeed = 90f;
-
     public override void Initialize(){
         base.Initialize();
         transform.localPosition = new Vector3(transform.localPosition.x, 0.5f, transform.localPosition.z);
+    }
+
+    protected override void OnMouseDown() {
+
+    }
+    protected override void OnMouseEnter() {
+
+    }
+    protected override void OnMouseExit() {
+
     }
 
     public override void MarkAsAttacking(Unit other) {
@@ -42,6 +49,11 @@ public class CustomUnit : Unit{
 
     public override void UnMark() {
 
+    }
+
+    public override void Move(Cell destinationCell, List<Cell> path) {
+        base.Move(destinationCell, path);
+        MovementPoints = 0;
     }
 
     protected override IEnumerator MovementAnimation(List<Cell> path) {

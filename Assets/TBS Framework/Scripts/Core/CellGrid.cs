@@ -81,7 +81,7 @@ public class CellGrid : MonoBehaviour
         StartGame();
     }
 
-    private void Initialize()
+    protected virtual void Initialize()
     {
         Players = new List<Player>();
         for (int i = 0; i < PlayersParent.childCount; i++)
