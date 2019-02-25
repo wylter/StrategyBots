@@ -44,15 +44,19 @@ public class GameController : MonoBehaviour{
         switch (action) {
 
             case PlayerSelectedAction.MOVE:
+                Debug.Log("Move not implemented");
                 break;
 
             case PlayerSelectedAction.ATTACK:
+                Debug.Log("Attack not implemented");
                 break;
 
             case PlayerSelectedAction.ABILITY:
+                Debug.Log("Ability not implemented");
                 break;
 
             case PlayerSelectedAction.SKIPTURN:
+                Debug.Log("Skip Turn");
                 CellGrid.EndTurn();
                 break;
 
