@@ -5,20 +5,22 @@ using UnityEngine;
 public class GameController : MonoBehaviour{
 
     [SerializeField]
-    private CellGrid CellGrid; //Reference to the CellGrid in the scene
+    private CellGrid _cellGrid; //Reference to the CellGrid in the scene
     [SerializeField]
-    private List<PlayerUIController> uiController; //List of ui of the players
+    private List<PlayerUIController> _uiController; //List of ui of the players
+
+    private CustomHumanPlayer currentPlayer;
 
     //Assignment of the events to the cellgrid event handlers
     void Awake(){ 
-        CellGrid.LevelLoading += onLevelLoading;
-        CellGrid.LevelLoadingDone += onLevelLoadingDone;
-        CellGrid.TurnEnded += OnTurnEnded;
-        CellGrid.GameStarted += OnGameStarted;
+        _cellGrid.LevelLoading += onLevelLoading;
+        _cellGrid.LevelLoadingDone += onLevelLoadingDone;
+        _cellGrid.TurnEnded += OnTurnEnded;
+        _cellGrid.GameStarted += OnGameStarted;
     }
 
     private void Start() {
-        Debug.Assert(uiController.Count == 2, "There should be one UI for each of the 2 players");
+        Debug.Assert(_uiController.Count == 2, "There should be one UI for each of the 2 players");
     }
 
     private void onLevelLoading(object sender, EventArgs e){
@@ -31,12 +33,17 @@ public class GameController : MonoBehaviour{
 
     //On turn ended change ui activated
     private void OnTurnEnded(object sender, EventArgs e) {
-        uiController.ForEach(ui => ui.SetButtonsInteractable(ui.PlayerNumber == CellGrid.CurrentPlayerNumber));
+        ChangeCurrentPlayer();
     }
 
     //On game started activate first player ui
     private void OnGameStarted(object sender, EventArgs e) {
-        uiController.ForEach(ui => ui.SetButtonsInteractable(ui.PlayerNumber == CellGrid.CurrentPlayerNumber));
+        ChangeCurrentPlayer();
+    }
+
+    private void ChangeCurrentPlayer() {
+        _uiController.ForEach(ui => ui.SetButtonsInteractable(ui.PlayerNumber == _cellGrid.CurrentPlayerNumber));
+        currentPlayer = (CustomHumanPlayer)_cellGrid.CurrentPlayer;
     }
 
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
@@ -44,11 +51,12 @@ public class GameController : MonoBehaviour{
         switch (action) {
 
             case PlayerSelectedAction.MOVE:
-                Debug.Log("Move not implemented");
+                _cellGrid.CellGridState = new CellGridStateUnitMove(_cellGrid, currentPlayer.CurrentUnit);
                 break;
 
             case PlayerSelectedAction.ATTACK:
                 Debug.Log("Attack not implemented");
+                _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentPlayer.CurrentUnit);
                 break;
 
             case PlayerSelectedAction.ABILITY:
@@ -56,12 +64,11 @@ public class GameController : MonoBehaviour{
                 break;
 
             case PlayerSelectedAction.SKIPTURN:
-                Debug.Log("Skip Turn");
-                CellGrid.EndTurn();
+                _cellGrid.EndTurn();
                 break;
 
             default:
-                Debug.Assert(false, "Out of options enumeration detected");
+                Debug.Assert(false, "Option not implemented detected");
                 break;
         }
     }
