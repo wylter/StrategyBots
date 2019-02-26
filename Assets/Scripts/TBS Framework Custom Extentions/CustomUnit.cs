@@ -1,8 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CustomUnit : Unit{
+
+    [SerializeField]
+    private LayerMask obstacleLayerMask;
+
+    private RaycastHit2D[] linecastCache;
+
+    private void Start() {
+        linecastCache = new RaycastHit2D[1];
+    }
 
     public override void Initialize(){
         base.Initialize();
@@ -70,5 +80,26 @@ public class CustomUnit : Unit{
             }
         }
         isMoving = false;
+    }
+
+    public virtual bool IsUnitAttackable(Cell otherCell, Cell sourceCell) {
+        if (sourceCell.GetDistance(otherCell) <= AttackRange)
+            return true;
+
+        return false;
+    }
+
+    public List<Cell> GetAvailableAttackableCells(List<Cell> cells) {
+
+        List<Cell> attackableCells = new List<Cell>(cells);
+
+        attackableCells = attackableCells.Where( otherCell => Cell.GetDistance(otherCell) <= AttackRange && IsCellInVision(otherCell)).ToList();
+
+
+        return attackableCells;
+    }
+
+    public bool IsCellInVision(Cell otherCell) {
+        return Physics2D.LinecastNonAlloc(Cell.transform.position, otherCell.transform.position, linecastCache, obstacleLayerMask) == 0;
     }
 }

@@ -5,17 +5,15 @@ using UnityEngine;
 
 public class CellGridStateUnitAttack : CellGridState {
 
-    private Unit _unit;
-    private HashSet<Cell> _pathsInRange;
+    private CustomUnit _unit;
+    private List<Cell> _attackableCellsInRange;
 
     private Cell _unitCell;
 
-    private List<Cell> _currentPath;
 
     public CellGridStateUnitAttack(CellGrid cellGrid, Unit unit) : base(cellGrid) {
-        _unit = unit;
-        _pathsInRange = new HashSet<Cell>();
-        _currentPath = new List<Cell>();
+        _unit = (CustomUnit)unit;
+        _attackableCellsInRange = new List<Cell>();
     }
 
     public override void OnCellClicked(Cell cell) {
@@ -36,18 +34,12 @@ public class CellGridStateUnitAttack : CellGridState {
         _unit.OnUnitSelected();
         _unitCell = _unit.Cell;
 
-        _pathsInRange = _unit.GetAvailableDestinations(_cellGrid.Cells);
-        var cellsNotInRange = _cellGrid.Cells.Except(_pathsInRange);
 
-        foreach (var cell in cellsNotInRange) {
-            cell.UnMark();
-        }
-        foreach (CustomSquare cell in _pathsInRange) {
+        _attackableCellsInRange = _unit.GetAvailableAttackableCells(_cellGrid.Cells);
+
+        foreach (CustomSquare cell in _attackableCellsInRange) {
             cell.MarkAsAttackable();
         }
-
-        if (_unit.ActionPoints <= 0) return;
-
     }
 
     public override void OnStateExit() {
