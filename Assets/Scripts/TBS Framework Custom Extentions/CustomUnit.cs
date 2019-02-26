@@ -7,6 +7,8 @@ public class CustomUnit : Unit{
 
     [SerializeField]
     private LayerMask obstacleLayerMask;
+    [SerializeField]
+    private GameObject unitBody;
 
     private RaycastHit2D[] linecastCache;
 
@@ -72,7 +74,7 @@ public class CustomUnit : Unit{
         foreach (var cell in path) {
             Vector3 destination_pos = new Vector3(cell.transform.localPosition.x, transform.localPosition.y, cell.transform.localPosition.z);
 
-            transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, Quaternion.LookRotation(destination_pos - transform.localPosition).eulerAngles.y, transform.localRotation.eulerAngles.z);
+            unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, destination_pos - transform.localPosition);
 
             while (transform.localPosition != destination_pos) {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, destination_pos, Time.deltaTime * MovementSpeed);
