@@ -49,4 +49,15 @@ public class CellGridStateUnitAttack : CellGridState {
             cell.UnMark();
         }
     }
+
+    public override void OnUnitClicked(Unit unit) {
+
+        if (unit.Equals(_unit) || _unit.isMoving)
+            return;
+
+        if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber != _unit.PlayerNumber && _unit.ActionPoints > 0) {
+            _unit.DealDamage(unit);
+            //_cellGrid.CellGridState = new CellGridStateUnitSelected(_cellGrid, _unit);
+        }
+    }
 }

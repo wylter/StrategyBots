@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomUnit : Unit{
 
     [SerializeField]
-    private LayerMask obstacleLayerMask;
+    private LayerMask _obstacleLayerMask;
     [SerializeField]
-    private GameObject unitBody;
+    private GameObject _unitBody;
+
+    [SerializeField]
+    private Slider _healthUI;
 
     private RaycastHit2D[] linecastCache;
 
     private void Start() {
         linecastCache = new RaycastHit2D[1];
+        _healthUI.maxValue = _healthUI.value = HitPoints;
     }
 
     public override void Initialize(){
@@ -21,9 +26,6 @@ public class CustomUnit : Unit{
         transform.localPosition = new Vector3(transform.localPosition.x, 0.5f, transform.localPosition.z);
     }
 
-    protected override void OnMouseDown() {
-
-    }
     protected override void OnMouseEnter() {
 
     }
@@ -73,8 +75,8 @@ public class CustomUnit : Unit{
         path.Reverse();
         foreach (var cell in path) {
             Vector3 destination_pos = new Vector3(cell.transform.localPosition.x, transform.localPosition.y, cell.transform.localPosition.z);
-
-            unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, destination_pos - transform.localPosition);
+ 
+            _unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, destination_pos - transform.localPosition);
 
             while (transform.localPosition != destination_pos) {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, destination_pos, Time.deltaTime * MovementSpeed);
@@ -82,13 +84,6 @@ public class CustomUnit : Unit{
             }
         }
         isMoving = false;
-    }
-
-    public virtual bool IsUnitAttackable(Cell otherCell, Cell sourceCell) {
-        if (sourceCell.GetDistance(otherCell) <= AttackRange)
-            return true;
-
-        return false;
     }
 
     public List<Cell> GetAvailableAttackableCells(List<Cell> cells) {
@@ -102,6 +97,12 @@ public class CustomUnit : Unit{
     }
 
     public bool IsCellInVision(Cell otherCell) {
-        return Physics2D.LinecastNonAlloc(Cell.transform.position, otherCell.transform.position, linecastCache, obstacleLayerMask) == 0;
+        return Physics2D.LinecastNonAlloc(Cell.transform.position, otherCell.transform.position, linecastCache, _obstacleLayerMask) == 0;
+    }
+
+    protected override void Defend(Unit other, int damage) {
+        base.Defend(other, damage);
+
+        _healthUI.value = HitPoints;
     }
 }
