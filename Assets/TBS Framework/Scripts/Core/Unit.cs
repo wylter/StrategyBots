@@ -216,7 +216,7 @@ public abstract class Unit : MonoBehaviour
     /// <summary>
     /// Attacking unit calls Defend method on defending unit. 
     /// </summary>
-    protected virtual void Defend(Unit other, int damage)
+    public virtual void Defend(Unit other, int damage)
     {
         MarkAsDefending(other);
         //Damage is calculated by subtracting attack factor of attacker and defence factor of defender. 

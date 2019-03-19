@@ -186,8 +186,8 @@ class GridHelper : EditorWindow
         unitGenerator.UnitsParent = units.transform;
         unitGenerator.CellsParent = cellGrid.transform;
 
-        var guiControllerScript = guiController.AddComponent<GUIController>();
-        guiControllerScript.CellGrid = cellGridScript;
+        var guiControllerScript = guiController.AddComponent<GameController>();
+        guiControllerScript.cellGrid = cellGridScript;
         
         foreach (var fieldName in parameterValues.Keys)
         {

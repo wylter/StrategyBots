@@ -6,10 +6,12 @@ public class GameController : MonoBehaviour{
 
     [SerializeField]
     private CellGrid _cellGrid; //Reference to the CellGrid in the scene
+    public CellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
     [SerializeField]
     private List<PlayerUIController> _uiController; //List of ui of the players
 
     private CustomHumanPlayer currentPlayer;
+    public CustomHumanPlayer CurrentPlayer { get { return currentPlayer; } }
 
     //Assignment of the events to the cellgrid event handlers
     void Awake(){ 
@@ -48,18 +50,26 @@ public class GameController : MonoBehaviour{
 
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
 
+        CustomUnit currentUnit = currentPlayer.CurrentUnit as CustomUnit;
+
+        if (currentUnit.isActing == true) {
+            Debug.Log("Cannot do actions while the unit is acting");
+            return;
+        }
+
         switch (action) {
 
             case PlayerSelectedAction.MOVE:
-                _cellGrid.CellGridState = new CellGridStateUnitMove(_cellGrid, currentPlayer.CurrentUnit);
+                
+                _cellGrid.CellGridState = new CellGridStateUnitMove(_cellGrid, currentUnit);
                 break;
 
             case PlayerSelectedAction.ATTACK:
-                Debug.Log("Attack not implemented");
-                _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentPlayer.CurrentUnit);
+                _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentUnit);
                 break;
 
             case PlayerSelectedAction.ABILITY:
+                currentUnit.ability.EnterState(_cellGrid, currentUnit);
                 Debug.Log("Ability not implemented");
                 break;
 

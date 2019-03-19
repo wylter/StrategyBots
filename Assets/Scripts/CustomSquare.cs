@@ -13,6 +13,8 @@ public class CustomSquare : Square{
     private Color _reachableColor; //Color to set when highlighting the square as reachable
     [SerializeField]
     private Color _attackableColor; //Color to set when highlighting the square as attackable
+    [SerializeField]
+    private Color _reachableByAbilityColor; //Color to set when highlighting the square as attackable
 
     private SpriteRenderer _spriteRenderer; //Sprite rendere component of the prefab
     private Color _defaultColor; //Default color set for the prefab
@@ -43,6 +45,10 @@ public class CustomSquare : Square{
 
     public void MarkAsAttackable() {
         _spriteRenderer.color = _attackableColor;
+    }
+
+    public void MarkAsReachableByAbility() {
+        _spriteRenderer.color = _reachableByAbilityColor;
     }
 
 

@@ -14,11 +14,20 @@ public class CustomUnit : Unit{
     [SerializeField]
     private Slider _healthUI;
 
-    private RaycastHit2D[] linecastCache;
+    private RaycastHit2D[] _linecastCache;
+
+    public bool isActing;
+
+    private Animator animator;
+
+    private AbilityBehavior _ability;
+    public AbilityBehavior ability { get { return _ability; } }
 
     private void Start() {
-        linecastCache = new RaycastHit2D[1];
+        _linecastCache = new RaycastHit2D[1];
         _healthUI.maxValue = _healthUI.value = HitPoints;
+        animator = GetComponent<Animator>();
+        _ability = GetComponent<AbilityBehavior>();
     }
 
     public override void Initialize(){
@@ -71,7 +80,8 @@ public class CustomUnit : Unit{
     }
 
     protected override IEnumerator MovementAnimation(List<Cell> path) {
-        isMoving = true;
+        
+        isMoving = isActing = true;
         path.Reverse();
         foreach (var cell in path) {
             Vector3 destination_pos = new Vector3(cell.transform.localPosition.x, transform.localPosition.y, cell.transform.localPosition.z);
@@ -83,26 +93,60 @@ public class CustomUnit : Unit{
                 yield return 0;
             }
         }
-        isMoving = false;
+        isMoving = isActing = false;
     }
 
     public List<Cell> GetAvailableAttackableCells(List<Cell> cells) {
+        return GetAvailableAttackableCells(cells, AttackRange);
+    }
+
+    public List<Cell> GetAvailableAttackableCells(List<Cell> cells, int range) {
 
         List<Cell> attackableCells = new List<Cell>(cells);
 
-        attackableCells = attackableCells.Where( otherCell => Cell.GetDistance(otherCell) <= AttackRange && IsCellInVision(otherCell)).ToList();
+        attackableCells = attackableCells.Where(otherCell => Cell.GetDistance(otherCell) <= range && IsCellInVision(otherCell)).ToList();
 
 
         return attackableCells;
     }
 
     public bool IsCellInVision(Cell otherCell) {
-        return Physics2D.LinecastNonAlloc(Cell.transform.position, otherCell.transform.position, linecastCache, _obstacleLayerMask) == 0;
+        return Physics2D.LinecastNonAlloc(Cell.transform.position, otherCell.transform.position, _linecastCache, _obstacleLayerMask) == 0;
     }
 
-    protected override void Defend(Unit other, int damage) {
+    public override void Defend(Unit other, int damage) {
         base.Defend(other, damage);
 
         _healthUI.value = HitPoints;
+    }
+
+    public override void DealDamage(Unit other) {
+        if (isMoving)
+            return;
+        if (ActionPoints == 0)
+            return;
+        if (!IsUnitAttackable(other, Cell))
+            return;
+
+        isActing = true;
+        _unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, other.transform.position - transform.localPosition);
+        animator.SetTrigger("Attack");
+
+        StartCoroutine(ResolveAttack(other));
+    }
+
+    private IEnumerator ResolveAttack(Unit other) {
+        while (isActing) {
+            yield return null;
+        }
+
+        MarkAsAttacking(other);
+        ActionPoints--;
+        other.Defend(this, AttackFactor);
+
+        if (ActionPoints == 0) {
+            SetState(new UnitStateMarkedAsFinished(this));
+            MovementPoints = 0;
+        }
     }
 }

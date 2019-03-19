@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class CustomCellGrid : CellGrid{
 
+    public bool isUnitPlaying = false;
+
     protected override void Initialize() {
         base.Initialize();
         GetComponent<CustomObstaclesGenerator>().SpawnObstacles();
