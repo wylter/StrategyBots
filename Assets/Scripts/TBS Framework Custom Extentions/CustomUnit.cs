@@ -18,21 +18,33 @@ public class CustomUnit : Unit{
 
     public bool isActing;
 
-    private Animator animator;
+    private Animator _animator;
+    public Animator animator { get { return _animator; } }
 
     private AbilityBehavior _ability;
     public AbilityBehavior ability { get { return _ability; } }
 
+    private bool _abilityActionUsable;
+    public bool abilityActionUsable { get { return _abilityActionUsable; } set { _abilityActionUsable = value;} }
+
     private void Start() {
         _linecastCache = new RaycastHit2D[1];
         _healthUI.maxValue = _healthUI.value = HitPoints;
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         _ability = GetComponent<AbilityBehavior>();
     }
 
     public override void Initialize(){
         base.Initialize();
         transform.localPosition = new Vector3(transform.localPosition.x, 0.5f, transform.localPosition.z);
+
+        CustomSquare cell = Cell as CustomSquare;
+        cell.unit = this;
+    }
+
+    public override void OnTurnStart() {
+        base.OnTurnStart();
+        _abilityActionUsable = true;
     }
 
     protected override void OnMouseEnter() {
@@ -75,8 +87,21 @@ public class CustomUnit : Unit{
     }
 
     public override void Move(Cell destinationCell, List<Cell> path) {
+
+        CustomSquare currentSquare = Cell as CustomSquare;
+        if (currentSquare) {
+            currentSquare.unit = null;
+        }
+        Debug.Assert(currentSquare, "Cell is not custom square");
+
         base.Move(destinationCell, path);
         MovementPoints = 0;
+
+        CustomSquare destSquare = destinationCell as CustomSquare;
+        if (destSquare) {
+            destSquare.unit = this;
+        }
+        Debug.Assert(destSquare, "Cell is not custom square");
     }
 
     protected override IEnumerator MovementAnimation(List<Cell> path) {
@@ -130,7 +155,7 @@ public class CustomUnit : Unit{
 
         isActing = true;
         _unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, other.transform.position - transform.localPosition);
-        animator.SetTrigger("Attack");
+        _animator.SetTrigger("Attack");
 
         StartCoroutine(ResolveAttack(other));
     }

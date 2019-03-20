@@ -57,7 +57,7 @@ public class CellGridStateUnitAttack : CellGridState {
 
         if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber != _unit.PlayerNumber && _unit.ActionPoints > 0) {
             _unit.DealDamage(unit);
-            //_cellGrid.CellGridState = new CellGridStateUnitSelected(_cellGrid, _unit);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
         }
     }
 }

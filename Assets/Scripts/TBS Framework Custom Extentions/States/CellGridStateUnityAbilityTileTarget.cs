@@ -18,6 +18,13 @@ public class CellGridStateUnityAbilityTileTarget : CellGridState {
 
     public override void OnCellClicked(Cell cell) {
 
+        if (_unit.isMoving)
+            return;
+
+        if (_attackableCellsInRange.Contains(cell) && _unit.abilityActionUsable) {
+            _unit.ability.OnCellSelected(cell, _cellGrid.Cells);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+        }
     }
 
     public override void OnCellDeselected(Cell cell) {
@@ -51,5 +58,12 @@ public class CellGridStateUnityAbilityTileTarget : CellGridState {
     }
 
     public override void OnUnitClicked(Unit unit) {
+        if (_unit.isMoving)
+            return;
+
+        if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber != _unit.PlayerNumber && _unit.abilityActionUsable) {
+            _unit.ability.OnCellSelected(unit.Cell, _cellGrid.Cells);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+        }
     }
 }

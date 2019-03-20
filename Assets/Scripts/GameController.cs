@@ -60,17 +60,21 @@ public class GameController : MonoBehaviour{
         switch (action) {
 
             case PlayerSelectedAction.MOVE:
-                
-                _cellGrid.CellGridState = new CellGridStateUnitMove(_cellGrid, currentUnit);
+                if (currentUnit.MovementPoints > 0) {
+                    _cellGrid.CellGridState = new CellGridStateUnitMove(_cellGrid, currentUnit);
+                }
                 break;
 
             case PlayerSelectedAction.ATTACK:
-                _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentUnit);
+                if (currentUnit.ActionPoints > 0) {
+                    _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentUnit);
+                }
                 break;
 
             case PlayerSelectedAction.ABILITY:
-                currentUnit.ability.EnterState(_cellGrid, currentUnit);
-                Debug.Log("Ability not implemented");
+                if (currentUnit.abilityActionUsable) {
+                    currentUnit.ability.EnterState(_cellGrid, currentUnit);
+                }
                 break;
 
             case PlayerSelectedAction.SKIPTURN:

@@ -8,4 +8,6 @@ public abstract class AbilityBehavior : MonoBehaviour{
 
     public abstract void Use();
     public abstract void EnterState(CellGrid cellGrid, CustomUnit unit);
+    public abstract void OnCellSelected(Cell cell, List<Cell> gridCells);
+    public abstract IEnumerator ResolveAbility();
 }

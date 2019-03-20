@@ -18,6 +18,9 @@ public class CustomSquare : Square{
 
     private SpriteRenderer _spriteRenderer; //Sprite rendere component of the prefab
     private Color _defaultColor; //Default color set for the prefab
+
+    private CustomUnit _unit = null;
+    public CustomUnit unit { get { return _unit; } set { _unit = value; } }
     
 
     
