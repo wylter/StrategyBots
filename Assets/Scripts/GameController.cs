@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviour{
@@ -48,6 +49,17 @@ public class GameController : MonoBehaviour{
         currentPlayer = (CustomHumanPlayer)_cellGrid.CurrentPlayer;
     }
 
+    public void DeregisterUnitFromPlayer(Unit unit) {
+        CustomHumanPlayer player = _cellGrid.Players.Find(p => p.PlayerNumber.Equals(unit.PlayerNumber)) as CustomHumanPlayer;
+        Debug.Assert(player != null, "Error in retriving the player");
+
+        player.PlayerUnits = new Queue<Unit>(player.PlayerUnits.Where(u => u != unit));
+
+        if (player.PlayerUnits.Count == 0) {
+            GameOver(unit.PlayerNumber);
+        }
+    }
+
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
 
         CustomUnit currentUnit = currentPlayer.CurrentUnit as CustomUnit;
@@ -85,5 +97,10 @@ public class GameController : MonoBehaviour{
                 Debug.Assert(false, "Option not implemented detected");
                 break;
         }
+    }
+
+    private void GameOver(int losingPlayerNumber) {
+        _cellGrid.CellGridState = new CellGridStateGameOver(_cellGrid);
+        Debug.Log(losingPlayerNumber + "Has lost");
     }
 }

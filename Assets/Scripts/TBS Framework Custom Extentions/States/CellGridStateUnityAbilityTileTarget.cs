@@ -45,7 +45,9 @@ public class CellGridStateUnityAbilityTileTarget : CellGridState {
         _attackableCellsInRange = _unit.GetAvailableAttackableCells(_cellGrid.Cells, _unit.ability.range);
 
         foreach (CustomSquare cell in _attackableCellsInRange) {
-            cell.MarkAsReachableByAbility();
+            if (cell.unit == null || cell.unit.PlayerNumber != _unit.PlayerNumber) {
+                cell.MarkAsReachableByAbility();
+            }
         }
     }
 

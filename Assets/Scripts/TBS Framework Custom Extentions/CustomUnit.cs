@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CustomUnit : Unit{
 
+
+    [Header("Unit Elements")]
+    [SerializeField]
+    private GameObject _unitBody;
+    [SerializeField]
+    private Slider _healthUI;
+    [SerializeField]
+    private TextMeshProUGUI _healthText;
+    [Space]
+    [Header("Settings")]
+    [SerializeField]
+    private Color _destroyedColor;
     [SerializeField]
     private LayerMask _obstacleLayerMask;
     [SerializeField]
-    private GameObject _unitBody;
-
+    private Color _loseHealthColor;
     [SerializeField]
-    private Slider _healthUI;
+    private Color _gainHealthColor;
 
     private RaycastHit2D[] _linecastCache;
 
+    [HideInInspector]
     public bool isActing;
 
     private Animator _animator;
@@ -54,6 +67,20 @@ public class CustomUnit : Unit{
 
     }
 
+    protected override void OnDestroyed() {
+        CustomSquare square = Cell as CustomSquare;
+        if (square) {
+            square.unit = null;
+        }
+        MarkAsDestroyed();
+
+        GameController gameController = FindObjectOfType<GameController>();
+        gameController.DeregisterUnitFromPlayer(this);
+
+        _unitBody.transform.SetParent(transform.parent);
+        Destroy(gameObject);
+    }
+
     public override void MarkAsAttacking(Unit other) {
 
     }
@@ -63,7 +90,7 @@ public class CustomUnit : Unit{
     }
 
     public override void MarkAsDestroyed() {
-
+        _unitBody.GetComponent<SpriteRenderer>().color = _destroyedColor;
     }
 
     public override void MarkAsFinished() {
@@ -109,12 +136,16 @@ public class CustomUnit : Unit{
         isMoving = isActing = true;
         path.Reverse();
         foreach (var cell in path) {
-            Vector3 destination_pos = new Vector3(cell.transform.localPosition.x, transform.localPosition.y, cell.transform.localPosition.z);
- 
-            _unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, destination_pos - transform.localPosition);
+            Vector3 destination_pos = new Vector3(cell.transform.position.x, cell.transform.position.y, transform.position.z);
 
-            while (transform.localPosition != destination_pos) {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, destination_pos, Time.deltaTime * MovementSpeed);
+            Quaternion newRotation = Quaternion.LookRotation(transform.position - destination_pos, Vector3.forward);
+            newRotation.x = 0;
+            newRotation.y = 0;
+
+            _unitBody.transform.localRotation = newRotation;
+
+            while (transform.position != destination_pos) {
+                transform.position = Vector3.MoveTowards(transform.position, destination_pos, Time.deltaTime * MovementSpeed);
                 yield return 0;
             }
         }
@@ -140,6 +171,8 @@ public class CustomUnit : Unit{
     }
 
     public override void Defend(Unit other, int damage) {
+        ShowHealthAnimation(-damage, _loseHealthColor);
+
         base.Defend(other, damage);
 
         _healthUI.value = HitPoints;
@@ -154,7 +187,13 @@ public class CustomUnit : Unit{
             return;
 
         isActing = true;
-        _unitBody.transform.localRotation = Quaternion.LookRotation(Vector3.forward, other.transform.position - transform.localPosition);
+
+        Quaternion newRotation = Quaternion.LookRotation(transform.position - other.transform.position, Vector3.forward);
+        newRotation.x = 0;
+        newRotation.y = 0;
+
+        _unitBody.transform.localRotation = newRotation;
+
         _animator.SetTrigger("Attack");
 
         StartCoroutine(ResolveAttack(other));
@@ -173,5 +212,11 @@ public class CustomUnit : Unit{
             SetState(new UnitStateMarkedAsFinished(this));
             MovementPoints = 0;
         }
+    }
+
+    private void ShowHealthAnimation(int amount, Color color) {
+        _healthText.color = color;
+        _healthText.SetText(amount.ToString());
+        animator.SetTrigger("UpdateHealth");
     }
 }
