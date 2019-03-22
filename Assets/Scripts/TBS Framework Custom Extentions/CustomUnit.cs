@@ -142,7 +142,7 @@ public class CustomUnit : Unit{
             newRotation.x = 0;
             newRotation.y = 0;
 
-            _unitBody.transform.localRotation = newRotation;
+            _unitBody.transform.rotation = newRotation;
 
             while (transform.position != destination_pos) {
                 transform.position = Vector3.MoveTowards(transform.position, destination_pos, Time.deltaTime * MovementSpeed);
@@ -192,7 +192,7 @@ public class CustomUnit : Unit{
         newRotation.x = 0;
         newRotation.y = 0;
 
-        _unitBody.transform.localRotation = newRotation;
+        _unitBody.transform.rotation = newRotation;
 
         _animator.SetTrigger("Attack");
 
