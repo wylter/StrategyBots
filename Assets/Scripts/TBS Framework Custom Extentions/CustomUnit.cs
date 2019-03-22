@@ -142,11 +142,7 @@ public class CustomUnit : Unit{
         foreach (var cell in path) {
             Vector3 destination_pos = new Vector3(cell.transform.position.x, cell.transform.position.y, transform.position.z);
 
-            Quaternion newRotation = Quaternion.LookRotation(transform.position - destination_pos, Vector3.forward);
-            newRotation.x = 0;
-            newRotation.y = 0;
-
-            _unitBody.transform.rotation = newRotation;
+            RotateUnitTowardPosition(destination_pos);
 
             while (transform.position != destination_pos) {
                 transform.position = Vector3.MoveTowards(transform.position, destination_pos, Time.deltaTime * MovementSpeed);
@@ -192,11 +188,7 @@ public class CustomUnit : Unit{
 
         isActing = true;
 
-        Quaternion newRotation = Quaternion.LookRotation(transform.position - other.transform.position, Vector3.forward);
-        newRotation.x = 0;
-        newRotation.y = 0;
-
-        _unitBody.transform.rotation = newRotation;
+        RotateUnitTowardPosition(other.transform.position);
 
         _animator.SetTrigger("Attack");
 
@@ -226,5 +218,13 @@ public class CustomUnit : Unit{
 
     public int GetAbilityCost() {
         return HitPoints > TotalHitPoints / 2 ? _abilityCost : _abilityCostWhenDamaged;
+    }
+
+    public void RotateUnitTowardPosition(Vector3 position) {
+        Quaternion newRotation = Quaternion.LookRotation(transform.position - position, Vector3.forward);
+        newRotation.x = 0;
+        newRotation.y = 0;
+
+        _unitBody.transform.rotation = newRotation;
     }
 }
