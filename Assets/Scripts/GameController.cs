@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour{
 
+    [Header("Elements")]
     [SerializeField]
     private CellGrid _cellGrid; //Reference to the CellGrid in the scene
     public CellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
@@ -45,8 +46,16 @@ public class GameController : MonoBehaviour{
     }
 
     private void ChangeCurrentPlayer() {
-        _uiController.ForEach(ui => ui.SetButtonsInteractable(ui.PlayerNumber == _cellGrid.CurrentPlayerNumber));
         currentPlayer = (CustomHumanPlayer)_cellGrid.CurrentPlayer;
+        _uiController.ForEach(ui => {
+            ui.SetButtonsInteractable(ui.PlayerNumber == _cellGrid.CurrentPlayerNumber);
+            if (ui.PlayerNumber == _cellGrid.CurrentPlayerNumber) {
+                CustomUnit unit = currentPlayer.PlayerUnits.Peek() as CustomUnit;
+                if (unit != null) {
+                    ui.SetAbilityCost(unit.GetAbilityCost());
+                }
+            }
+        });
     }
 
     public void DeregisterUnitFromPlayer(Unit unit) {
@@ -78,13 +87,13 @@ public class GameController : MonoBehaviour{
                 break;
 
             case PlayerSelectedAction.ATTACK:
-                if (currentUnit.ActionPoints > 0) {
+                if (currentUnit.ActionPoints > 0 && currentUnit.abilityActionUsable) {
                     _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentUnit);
                 }
                 break;
 
             case PlayerSelectedAction.ABILITY:
-                if (currentUnit.abilityActionUsable) {
+                if (currentUnit.ActionPoints > 0 && currentUnit.abilityActionUsable) {
                     currentUnit.ability.EnterState(_cellGrid, currentUnit);
                 }
                 break;

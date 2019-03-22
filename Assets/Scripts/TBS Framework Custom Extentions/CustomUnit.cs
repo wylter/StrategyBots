@@ -7,7 +7,11 @@ using TMPro;
 
 public class CustomUnit : Unit{
 
-
+    [SerializeField]
+    private int _abilityCost;
+    [SerializeField]
+    private int _abilityCostWhenDamaged;
+    [Space]
     [Header("Unit Elements")]
     [SerializeField]
     private GameObject _unitBody;
@@ -218,5 +222,9 @@ public class CustomUnit : Unit{
         _healthText.color = color;
         _healthText.SetText(amount.ToString());
         animator.SetTrigger("UpdateHealth");
+    }
+
+    public int GetAbilityCost() {
+        return HitPoints > TotalHitPoints / 2 ? _abilityCost : _abilityCostWhenDamaged;
     }
 }
