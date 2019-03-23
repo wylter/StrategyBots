@@ -34,7 +34,6 @@ public class CustomHumanPlayer : HumanPlayer{
         playerUnits.Enqueue(currentUnit);
 
         cellGrid.CellGridState = new CellGridStateUnitMove(cellGrid, currentUnit);
-        Debug.Log("Play");
     }
     
 }

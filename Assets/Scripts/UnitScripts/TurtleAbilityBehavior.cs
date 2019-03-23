@@ -24,7 +24,6 @@ public class TurtleAbilityBehavior : AbilityBehavior {
         StartCoroutine(ResolveAbility());
 
         CustomSquare square = cell as CustomSquare;
-        Debug.Log(square.name);
 
         targetSquares = square.GetNeighbours(gridCells);
         targetSquares.Add(cell);

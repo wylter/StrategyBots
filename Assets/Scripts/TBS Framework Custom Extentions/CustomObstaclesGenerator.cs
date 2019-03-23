@@ -22,6 +22,10 @@ public class CustomObstaclesGenerator : MonoBehaviour {
             var cell = cells.OrderBy(h => Math.Abs((h.transform.position - obstacle.transform.position).magnitude)).First();
             if (!cell.IsTaken) {
                 cell.IsTaken = true;
+                CustomSquare square = cell as CustomSquare;
+                if (square != null) {
+                    square.isTakenByObstacle = true;
+                }
                 var bounds = getBounds(obstacle);
                 Vector3 offset = new Vector3(0, bounds.y, 0);
                 obstacle.localPosition = cell.transform.localPosition + offset;
