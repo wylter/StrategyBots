@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Class representing a single field (cell) on the grid.
@@ -53,7 +54,9 @@ public abstract class Cell : MonoBehaviour, IGraphNode, IEquatable<Cell>
     void OnMouseDown()
     {
         if (CellClicked != null)
-            CellClicked.Invoke(this, new EventArgs());
+            if (!EventSystem.current.IsPointerOverGameObject()) {
+                CellClicked.Invoke(this, new EventArgs());
+            }
     }
 
     /// <summary>

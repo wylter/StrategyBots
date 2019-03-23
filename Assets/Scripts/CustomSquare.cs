@@ -22,6 +22,7 @@ public class CustomSquare : Square{
     private CustomUnit _unit = null;
     public CustomUnit unit { get { return _unit; } set { _unit = value; } }
 
+    [HideInInspector]
     public bool isTakenByObstacle;
     
 
