@@ -6,6 +6,8 @@ public class TurtleAbilityBehavior : AbilityBehavior {
 
     [SerializeField]
     private int _damage;
+    [SerializeField]
+    private GameObject _explosion;
 
     private List<Cell> targetSquares;
 
@@ -30,6 +32,7 @@ public class TurtleAbilityBehavior : AbilityBehavior {
 
     public override void Use() {
         foreach (CustomSquare targetSquare in targetSquares) {
+            Instantiate(_explosion, targetSquare.transform.position, Quaternion.identity);
             if (targetSquare.unit && targetSquare.unit.PlayerNumber != _unit.PlayerNumber) {
                 targetSquare.unit.Defend(_unit, _damage);
             }
