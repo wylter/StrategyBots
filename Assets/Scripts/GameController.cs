@@ -9,8 +9,11 @@ public class GameController : MonoBehaviour{
     [SerializeField]
     private CellGrid _cellGrid; //Reference to the CellGrid in the scene
     public CellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
+    [Header("Elements")]
     [SerializeField]
     private List<PlayerUIController> _uiController; //List of ui of the players
+    [SerializeField]
+    private PauseMenuController pauseMenu;
 
     private CustomHumanPlayer currentPlayer;
     public CustomHumanPlayer CurrentPlayer { get { return currentPlayer; } }
@@ -102,6 +105,28 @@ public class GameController : MonoBehaviour{
                 _cellGrid.EndTurn();
                 break;
 
+            case PlayerSelectedAction.PAUSE:
+                pauseMenu.ToglePause(true);
+                break;
+
+            default:
+                Debug.Assert(false, "Option not implemented detected");
+                break;
+        }
+    }
+
+    public void NotifyMenuSelectedAction(MenuSelectedAction action) {
+
+        switch (action) {
+
+            case MenuSelectedAction.PLAY:
+                pauseMenu.ToglePause(false);
+                break;
+
+            case MenuSelectedAction.EXIT:
+                Debug.Log("Exit to implement");
+                break;
+
             default:
                 Debug.Assert(false, "Option not implemented detected");
                 break;
@@ -112,4 +137,5 @@ public class GameController : MonoBehaviour{
         _cellGrid.CellGridState = new CellGridStateGameOver(_cellGrid);
         Debug.Log(losingPlayerNumber + "Has lost");
     }
+
 }

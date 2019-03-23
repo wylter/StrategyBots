@@ -47,4 +47,5 @@ public class PlayerUIController : MonoBehaviour{
     public void SetAbilityCost(int cost) {
         _abilityCostText.SetText(cost.ToString());
     }
+
 }
