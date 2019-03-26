@@ -8,27 +8,27 @@ using TMPro;
 public class CustomUnit : Unit{
 
     [SerializeField]
-    private int _abilityCost;
+    private int _abilityCost = 1;
     [SerializeField]
-    private int _abilityCostWhenDamaged;
+    private int _abilityCostWhenDamaged = 2;
     [Space]
     [Header("Unit Elements")]
     [SerializeField]
-    private GameObject _unitBody;
+    private GameObject _unitBody = null;
     [SerializeField]
-    private Slider _healthUI;
+    private Slider _healthUI = null;
     [SerializeField]
-    private TextMeshProUGUI _healthText;
+    private TextMeshProUGUI _healthText = null;
     [Space]
     [Header("Settings")]
     [SerializeField]
-    private Color _destroyedColor;
+    private Color _destroyedColor = Color.black;
     [SerializeField]
-    private LayerMask _obstacleLayerMask;
+    private LayerMask _obstacleLayerMask = 0;
     [SerializeField]
-    private Color _loseHealthColor;
+    private Color _loseHealthColor = Color.white;
     [SerializeField]
-    private Color _gainHealthColor;
+    private Color _gainHealthColor = Color.white;
 
     private RaycastHit2D[] _linecastCache;
 
@@ -49,6 +49,13 @@ public class CustomUnit : Unit{
         _healthUI.maxValue = _healthUI.value = HitPoints;
         _animator = GetComponent<Animator>();
         _ability = GetComponent<AbilityBehavior>();
+
+        Debug.Assert(_animator != null, "Animator not found");
+        Debug.Assert(_ability != null, "Ability not found");
+        Debug.Assert(_unitBody != null, "UnitBody is null");
+        Debug.Assert(_healthUI != null, "HealthUI is null");
+        Debug.Assert(_healthText != null, "HealthText is null");
+        Debug.Assert(_obstacleLayerMask != 0, "ObstacleLayerMask is not set");
     }
 
     public override void Initialize(){

@@ -7,9 +7,9 @@ using UnityEngine;
 [ExecuteInEditMode()]
 class RectangularHexGridGenerator : ICellGridGenerator
 {
-    public GameObject HexagonPrefab;
-    public int Height;
-    public int Width;
+    public GameObject HexagonPrefab = null;
+    public int Height = 0;
+    public int Width = 0;
 
     public override List<Cell> GenerateGrid()
     {

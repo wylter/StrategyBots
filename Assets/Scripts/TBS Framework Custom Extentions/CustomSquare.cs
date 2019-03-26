@@ -6,15 +6,15 @@ using UnityEngine;
 public class CustomSquare : Square{
 
     [SerializeField]
-    private Color _highlightedColor; //Color to set when highlighting the square
+    private Color _highlightedColor = Color.white; //Color to set when highlighting the square
     [SerializeField]
-    private Color _pathColor; //Color to set when highlighting the square as path
+    private Color _pathColor = Color.white; //Color to set when highlighting the square as path
     [SerializeField]
-    private Color _reachableColor; //Color to set when highlighting the square as reachable
+    private Color _reachableColor = Color.white; //Color to set when highlighting the square as reachable
     [SerializeField]
-    private Color _attackableColor; //Color to set when highlighting the square as attackable
+    private Color _attackableColor = Color.white; //Color to set when highlighting the square as attackable
     [SerializeField]
-    private Color _reachableByAbilityColor; //Color to set when highlighting the square as attackable
+    private Color _reachableByAbilityColor = Color.white; //Color to set when highlighting the square as attackable
 
     private SpriteRenderer _spriteRenderer; //Sprite rendere component of the prefab
     private Color _defaultColor; //Default color set for the prefab

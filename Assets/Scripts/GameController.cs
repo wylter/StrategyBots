@@ -11,12 +11,12 @@ public class GameController : MonoBehaviour{
     public CellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
     [Header("Elements")]
     [SerializeField]
-    private List<PlayerUIController> _uiController; //List of ui of the players
+    private List<PlayerUIController> _uiController = null; //List of ui of the players
     [SerializeField]
-    private PauseMenuController pauseMenu;
+    private PauseMenuController _pauseMenu = null;
 
-    private CustomHumanPlayer currentPlayer;
-    public CustomHumanPlayer CurrentPlayer { get { return currentPlayer; } }
+    private CustomHumanPlayer _currentPlayer;
+    public CustomHumanPlayer CurrentPlayer { get { return _currentPlayer; } }
 
     //Assignment of the events to the cellgrid event handlers
     void Awake(){ 
@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour{
 
     private void Start() {
         Debug.Assert(_uiController.Count == 2, "There should be one UI for each of the 2 players");
+        Debug.Assert(_pauseMenu != null, "PauseMenu is null");
     }
 
     private void onLevelLoading(object sender, EventArgs e){
@@ -49,11 +50,11 @@ public class GameController : MonoBehaviour{
     }
 
     private void ChangeCurrentPlayer() {
-        currentPlayer = (CustomHumanPlayer)_cellGrid.CurrentPlayer;
+        _currentPlayer = (CustomHumanPlayer)_cellGrid.CurrentPlayer;
         _uiController.ForEach(ui => {
             ui.SetButtonsInteractable(ui.PlayerNumber == _cellGrid.CurrentPlayerNumber);
             if (ui.PlayerNumber == _cellGrid.CurrentPlayerNumber) {
-                CustomUnit unit = currentPlayer.PlayerUnits.Peek() as CustomUnit;
+                CustomUnit unit = _currentPlayer.PlayerUnits.Peek() as CustomUnit;
                 if (unit != null) {
                     ui.SetAbilityCost(unit.GetAbilityCost());
                 }
@@ -74,7 +75,7 @@ public class GameController : MonoBehaviour{
 
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
 
-        CustomUnit currentUnit = currentPlayer.CurrentUnit as CustomUnit;
+        CustomUnit currentUnit = _currentPlayer.CurrentUnit as CustomUnit;
 
         if (currentUnit.isActing == true) {
             Debug.Log("Cannot do actions while the unit is acting");
@@ -106,7 +107,7 @@ public class GameController : MonoBehaviour{
                 break;
 
             case PlayerSelectedAction.PAUSE:
-                pauseMenu.ToglePause(true);
+                _pauseMenu.ToglePause(true);
                 break;
 
             default:
@@ -120,7 +121,7 @@ public class GameController : MonoBehaviour{
         switch (action) {
 
             case MenuSelectedAction.PLAY:
-                pauseMenu.ToglePause(false);
+                _pauseMenu.ToglePause(false);
                 break;
 
             case MenuSelectedAction.EXIT:

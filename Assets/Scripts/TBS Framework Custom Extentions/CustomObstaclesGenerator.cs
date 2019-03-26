@@ -8,16 +8,21 @@ using UnityEngine;
 public class CustomObstaclesGenerator : MonoBehaviour {
 
     [SerializeField]
-    private Transform ObstaclesParent;
+    private Transform _obstaclesParent = null;
     [SerializeField]
-    private CellGrid CellGrid;
+    private CellGrid _cellGrid = null;
+
+    private void Start() {
+        Debug.Assert(_obstaclesParent != null, "ObstaclesParent is null");
+        Debug.Assert(_cellGrid != null, "CellGrid is null");
+    }
 
     public void SpawnObstacles() {
 
-        var cells = CellGrid.Cells;
+        var cells = _cellGrid.Cells;
 
-        for (int i = 0; i < ObstaclesParent.childCount; i++) {
-            var obstacle = ObstaclesParent.GetChild(i);
+        for (int i = 0; i < _obstaclesParent.childCount; i++) {
+            var obstacle = _obstaclesParent.GetChild(i);
 
             var cell = cells.OrderBy(h => Math.Abs((h.transform.position - obstacle.transform.position).magnitude)).First();
             if (!cell.IsTaken) {
@@ -38,11 +43,11 @@ public class CustomObstaclesGenerator : MonoBehaviour {
     public void SnapToGrid() {
         List<Transform> cells = new List<Transform>();
 
-        foreach (Transform cell in CellGrid.transform) {
+        foreach (Transform cell in _cellGrid.transform) {
             cells.Add(cell);
         }
 
-        foreach (Transform obstacle in ObstaclesParent) {
+        foreach (Transform obstacle in _obstaclesParent) {
             var bounds = getBounds(obstacle);
             var closestCell = cells.OrderBy(h => Math.Abs((h.transform.position - obstacle.transform.position).magnitude)).First();
             if (!closestCell.GetComponent<Cell>().IsTaken) {

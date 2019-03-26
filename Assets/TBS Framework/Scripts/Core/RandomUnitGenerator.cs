@@ -6,11 +6,11 @@ class RandomUnitGenerator : MonoBehaviour, IUnitGenerator
 {
     private System.Random _rnd = new System.Random();
 
-    public Transform UnitsParent;
+    public Transform UnitsParent = null;
 
-    public GameObject UnitPrefab;
-    public int NumberOfPlayers;
-    public int UnitsPerPlayer;
+    public GameObject UnitPrefab = null;
+    public int NumberOfPlayers = 0;
+    public int UnitsPerPlayer = 0;
 
     /// <summary>
     /// Method spawns UnitPerPlayer nunmber of UnitPrefabs in random positions.

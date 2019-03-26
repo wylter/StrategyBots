@@ -5,11 +5,15 @@ using UnityEngine;
 public class TurtleAbilityBehavior : AbilityBehavior {
 
     [SerializeField]
-    private int _damage;
+    private int _damage  = 0;
     [SerializeField]
-    private GameObject _explosion;
+    private GameObject _explosion = null;
 
     private List<Cell> targetSquares;
+
+    private void Start() {
+        Debug.Assert(_explosion != null, "Explosion is null");
+    }
 
     public override void EnterState(CellGrid cellGrid, CustomUnit unit) {
         base.EnterState(cellGrid, unit);
