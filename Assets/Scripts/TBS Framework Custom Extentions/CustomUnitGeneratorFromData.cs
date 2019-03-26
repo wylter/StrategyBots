@@ -43,7 +43,7 @@ public class CustomUnitGeneratorFromData : MonoBehaviour, IUnitGenerator {
         }
 
         for (int i = 0; i < _data.playersSelection[0].playerUnits.Length; i++) {
-            GameObject unitInstance = Instantiate(unitClassToPrefab.enumsToPrefab.Find(u => u.unitClass == _data.playersSelection[0].playerUnits[i]).unitPrefab, _player2SpawnPoints[i].position, _player2SpawnPoints[i].rotation) as GameObject;
+            GameObject unitInstance = Instantiate(unitClassToPrefab.enumsToPrefab.Find(u => u.unitClass == _data.playersSelection[1].playerUnits[i]).unitPrefab, _player2SpawnPoints[i].position, _player2SpawnPoints[i].rotation) as GameObject;
             Unit unit = PositionateUnitInGrid(cells, unitInstance);
             unit.PlayerNumber = 1;
             ret.Add(unit);
