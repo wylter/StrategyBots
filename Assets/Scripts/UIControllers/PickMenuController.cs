@@ -8,6 +8,12 @@ public class PickMenuController : MonoBehaviour{
     public static readonly int maxUnits = 3;
 
     [SerializeField]
+    private LevelLoader _loader;
+    [SerializeField]
+    private int battlegroundLevelIndex = 1;
+    
+
+    [SerializeField]
     private DataController _data = null;
 
     private int[] _playerPicksNumber;
@@ -19,6 +25,7 @@ public class PickMenuController : MonoBehaviour{
 
     private void Start() {
         Debug.Assert(_data != null, "DataController is null");
+        Debug.Assert(_loader != null, "LevelLoader is null");
     }
 
     public void NotifyPick(int playerNumber, UnitClass pick, int spot) {
@@ -36,7 +43,7 @@ public class PickMenuController : MonoBehaviour{
 
     public void Play() {
         if (playerPicksNumber[0] == maxUnits && playerPicksNumber[1] == maxUnits) {
-            SceneManager.LoadScene("Battleground");
+            _loader.FadeToLevel(battlegroundLevelIndex);
         } else {
             Debug.Log("Player Didnt finish pick fase");
         }

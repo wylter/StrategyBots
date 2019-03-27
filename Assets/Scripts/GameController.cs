@@ -9,11 +9,22 @@ public class GameController : MonoBehaviour{
     [SerializeField]
     private CellGrid _cellGrid; //Reference to the CellGrid in the scene
     public CellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
-    [Header("Elements")]
+    [Header("UI Elements")]
     [SerializeField]
     private List<PlayerUIController> _uiController = null; //List of ui of the players
     [SerializeField]
     private PauseMenuController _pauseMenu = null;
+    [SerializeField]
+    private Color _victoryColor = Color.white;
+    [SerializeField]
+    private string _victoryMessage = "YOU WON";
+    [SerializeField]
+    private Color _loseColor = Color.white;
+    [SerializeField]
+    private string _loseMessage = "YOU LOST";
+    [Header("Utility Elements")]
+    [SerializeField]
+    private LevelLoader _loader;
 
     private CustomHumanPlayer _currentPlayer;
     public CustomHumanPlayer CurrentPlayer { get { return _currentPlayer; } }
@@ -29,6 +40,7 @@ public class GameController : MonoBehaviour{
     private void Start() {
         Debug.Assert(_uiController.Count == 2, "There should be one UI for each of the 2 players");
         Debug.Assert(_pauseMenu != null, "PauseMenu is null");
+        Debug.Assert(_loader != null, "LevelLoader is null");
     }
 
     private void onLevelLoading(object sender, EventArgs e){
@@ -125,7 +137,7 @@ public class GameController : MonoBehaviour{
                 break;
 
             case MenuSelectedAction.EXIT:
-                Debug.Log("Exit to implement");
+                _loader.FadeToLevel(0);
                 break;
 
             default:
@@ -136,7 +148,15 @@ public class GameController : MonoBehaviour{
 
     private void GameOver(int losingPlayerNumber) {
         _cellGrid.CellGridState = new CellGridStateGameOver(_cellGrid);
-        Debug.Log(losingPlayerNumber + "Has lost");
+        Debug.Log("Gameover");
+        _uiController.ForEach(ui => {
+            if (ui.PlayerNumber != losingPlayerNumber) {
+                ui.ShowGameoverText(_victoryMessage, _victoryColor);
+            } else {
+                ui.ShowGameoverText(_loseMessage, _loseColor);
+            }
+            ui.SetButtonsInteractable(false);
+        });
     }
 
 }
