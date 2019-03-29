@@ -14,11 +14,7 @@ public abstract class AbilityBehavior : MonoBehaviour{
         _unit = unit;
     }
 
-    public virtual IEnumerator ResolveAbility() {
-        while (_unit.isActing) {
-            yield return null;
-        }
-
+    public virtual void ResolveAbility() {
         _unit.Defend(_unit, _unit.GetAbilityCost());
 
         Use();

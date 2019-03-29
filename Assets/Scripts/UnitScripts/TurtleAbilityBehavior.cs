@@ -25,7 +25,6 @@ public class TurtleAbilityBehavior : AbilityBehavior {
         _unit.abilityActionUsable = false;
         _unit.isActing = true;
         _unit.animator.SetTrigger("Ability");
-        StartCoroutine(ResolveAbility());
 
         CustomSquare square = cell as CustomSquare;
 
@@ -40,5 +39,7 @@ public class TurtleAbilityBehavior : AbilityBehavior {
                 targetSquare.unit.Defend(_unit, _damage);
             }
         }
+
+        _unit.isActing = false;
     }
 }

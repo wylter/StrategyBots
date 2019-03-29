@@ -29,7 +29,6 @@ public class RamielAbilityBehavior : AbilityBehavior {
         _unit.RotateUnitTowardPosition(cell.transform.position);
 
         _unit.animator.SetTrigger("Ability");
-        StartCoroutine(ResolveAbility());
 
         Vector2 direction = (cell.OffsetCoord - _unit.Cell.OffsetCoord).normalized;
 
@@ -41,7 +40,6 @@ public class RamielAbilityBehavior : AbilityBehavior {
     }
 
     public override void Use() {
-        _unit.isActing = true;
         StartCoroutine(SpawnExplosions());
     }
 

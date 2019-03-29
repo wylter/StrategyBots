@@ -44,6 +44,8 @@ public class CustomUnit : Unit{
     private bool _abilityActionUsable;
     public bool abilityActionUsable { get { return _abilityActionUsable; } set { _abilityActionUsable = value;} }
 
+    private Unit _unitToAttack = null;
+
     private void Start() {
         _linecastCache = new RaycastHit2D[1];
         _healthUI.maxValue = _healthUI.value = HitPoints;
@@ -199,17 +201,15 @@ public class CustomUnit : Unit{
 
         _animator.SetTrigger("Attack");
 
-        StartCoroutine(ResolveAttack(other));
+        _unitToAttack = other;
     }
 
-    private IEnumerator ResolveAttack(Unit other) {
-        while (isActing) {
-            yield return null;
-        }
+    private void ResolveAttack() {
+        isActing = false;
 
-        MarkAsAttacking(other);
+        MarkAsAttacking(_unitToAttack);
         ActionPoints--;
-        other.Defend(this, AttackFactor);
+        _unitToAttack.Defend(this, AttackFactor);
 
         if (ActionPoints == 0) {
             SetState(new UnitStateMarkedAsFinished(this));
