@@ -7,9 +7,9 @@ public class CustomUnitGeneratorFromData : MonoBehaviour, IUnitGenerator {
 
     [Header("Elements")]
     [SerializeField]
-    private Transform UnitsParent;
+    private Transform UnitsParent = null;
     [SerializeField]
-    private Transform CellsParent;
+    private Transform CellsParent = null;
     [SerializeField]
     private List<Transform> _player1SpawnPoints = null;
     [SerializeField]
@@ -26,6 +26,8 @@ public class CustomUnitGeneratorFromData : MonoBehaviour, IUnitGenerator {
     private void Start() {
         Debug.Assert(_player1SpawnPoints.Count == PickMenuController.maxUnits, "Not all spawnpoints have been set");
         Debug.Assert(_player2SpawnPoints.Count == PickMenuController.maxUnits, "Not all spawnpoints have been set");
+        Debug.Assert(UnitsParent != null, "UnitParent is null");
+        Debug.Assert(CellsParent != null, "CellsParent is null");
     }
 
     public List<Unit> SpawnUnits(List<Cell> cells) {

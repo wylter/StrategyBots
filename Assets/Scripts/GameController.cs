@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class GameController : MonoBehaviour{
     private string _loseMessage = "YOU LOST";
     [Header("Utility Elements")]
     [SerializeField]
-    private LevelLoader _loader;
+    private LevelLoader _loader = null;
 
     private CustomHumanPlayer _currentPlayer;
     public CustomHumanPlayer CurrentPlayer { get { return _currentPlayer; } }
@@ -78,10 +79,12 @@ public class GameController : MonoBehaviour{
         CustomHumanPlayer player = _cellGrid.Players.Find(p => p.PlayerNumber.Equals(unit.PlayerNumber)) as CustomHumanPlayer;
         Debug.Assert(player != null, "Error in retriving the player");
 
-        player.PlayerUnits = new Queue<Unit>(player.PlayerUnits.Where(u => u != unit));
+        if(player != null) {
+            player.PlayerUnits = new Queue<Unit>(player.PlayerUnits.Where(u => u != unit));
 
-        if (player.PlayerUnits.Count == 0) {
-            GameOver(unit.PlayerNumber);
+            if (player.PlayerUnits.Count == 0) {
+                GameOver(unit.PlayerNumber);
+            }
         }
     }
 

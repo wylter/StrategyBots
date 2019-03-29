@@ -81,6 +81,14 @@ public class CustomUnit : Unit{
     }
 
     protected override void OnDestroyed() {
+        StartCoroutine(DestroyWhenStopped());
+    }
+
+    private IEnumerator DestroyWhenStopped() {
+        while (isActing) {
+            yield return null;
+        }
+
         CustomSquare square = Cell as CustomSquare;
         if (square) {
             square.unit = null;

@@ -8,7 +8,7 @@ public class PickMenuController : MonoBehaviour{
     public static readonly int maxUnits = 3;
 
     [SerializeField]
-    private LevelLoader _loader;
+    private LevelLoader _loader = null;
     [SerializeField]
     private int battlegroundLevelIndex = 1;
     
