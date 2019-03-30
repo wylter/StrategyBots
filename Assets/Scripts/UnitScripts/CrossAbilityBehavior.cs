@@ -7,11 +7,7 @@ public class CrossAbilityBehavior : AbilityBehavior {
     [SerializeField]
     private int _heal = 0;
 
-    private List<Cell> targetSquares;
-
-    private void Start() {
-         
-    }
+    private CustomUnit _targetUnit = null;
 
     public override void EnterState(CellGrid cellGrid, CustomUnit unit) {
         base.EnterState(cellGrid, unit);
@@ -19,24 +15,19 @@ public class CrossAbilityBehavior : AbilityBehavior {
     }
 
     public override void OnCellSelected(Cell cell, List<Cell> gridCells) {
+        Debug.LogError("Not usuable option called");
+    }
 
-        _unit.abilityActionUsable = false;
+    public override void OnUnitSelected(CustomUnit unit) {
+        unit.abilityActionUsable = false;
         _unit.isActing = true;
         _unit.animator.SetTrigger("Ability");
 
-        CustomSquare square = cell as CustomSquare;
-
-        targetSquares = square.GetNeighbours(gridCells);
-        targetSquares.Add(cell);
+        _targetUnit = unit;
     }
 
     public override void Use() {
-        foreach (CustomSquare targetSquare in targetSquares) {
-            Instantiate(_explosion, targetSquare.transform.position, Quaternion.identity);
-            if (targetSquare.unit && targetSquare.unit.PlayerNumber != _unit.PlayerNumber) {
-                targetSquare.unit.Defend(_unit, _damage);
-            }
-        }
+        Debug.Log("HEal");
 
         _unit.isActing = false;
     }

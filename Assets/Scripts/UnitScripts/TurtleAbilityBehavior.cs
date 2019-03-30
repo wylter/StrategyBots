@@ -42,4 +42,8 @@ public class TurtleAbilityBehavior : AbilityBehavior {
 
         _unit.isActing = false;
     }
+
+    public override void OnUnitSelected(CustomUnit unit) {
+        Debug.LogError("Not usuable option called");
+    }
 }

@@ -24,16 +24,15 @@ public class CustomUnitGeneratorFromData : MonoBehaviour, IUnitGenerator {
 
 
     private void Start() {
-        Debug.Assert(_player1SpawnPoints.Count == PickMenuController.maxUnits, "Not all spawnpoints have been set");
-        Debug.Assert(_player2SpawnPoints.Count == PickMenuController.maxUnits, "Not all spawnpoints have been set");
         Debug.Assert(UnitsParent != null, "UnitParent is null");
         Debug.Assert(CellsParent != null, "CellsParent is null");
     }
 
     public List<Unit> SpawnUnits(List<Cell> cells) {
-        _data = FindObjectOfType<DataController>();
-        Debug.Assert(_data.playersSelection[0].playerUnits.Length == PickMenuController.maxUnits, "Unit picket by player one are not in correct number");
-        Debug.Assert(_data.playersSelection[1].playerUnits.Length == PickMenuController.maxUnits, "Unit picket by player one are not in correct number");
+        _data = GameObject.FindGameObjectWithTag("Data").GetComponent<DataController>();
+        Debug.Assert(_data != null, "Data not recived");
+        Debug.Assert(_player1SpawnPoints.Count == _data.playersSelection[0].playerUnits.Length, "Not all spawnpoints have been set");
+        Debug.Assert(_player2SpawnPoints.Count == _data.playersSelection[1].playerUnits.Length, "Not all spawnpoints have been set");
 
         List<Unit> ret = new List<Unit>();
 

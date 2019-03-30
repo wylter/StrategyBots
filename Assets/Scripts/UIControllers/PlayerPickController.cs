@@ -8,13 +8,16 @@ public class PlayerPickController : MonoBehaviour{
 
     [SerializeField]
     private int _playerNumber = 0;
+    [SerializeField]
+    private Settings _settings = null;
 
-    private PickMenuController _pickController;
+    private PickController _pickController;
     private bool[] _occupiedSpots;
 
     private void Start() {
-        _pickController = FindObjectOfType<PickMenuController>();
-        _occupiedSpots = new bool[PickMenuController.maxUnits];
+        _pickController = FindObjectOfType<PickController>();
+        _occupiedSpots = new bool[PickController.maxUnits];
+        Debug.Assert(_settings != null, "Settings not set");
     }
 
     public void NotifyPlayerInput(int pick) {
@@ -44,7 +47,7 @@ public class PlayerPickController : MonoBehaviour{
     }
 
     public int findNextSpot(int start) {
-        while (start < PickMenuController.maxUnits) {
+        while (start < _settings.numberOfUnits) {
             if (!_occupiedSpots[start]) {
                 _occupiedSpots[start] = true;
                 return start;

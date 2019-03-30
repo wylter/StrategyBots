@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PickMenuController : MonoBehaviour{
+public class PickController : MonoBehaviour{
 
     public static readonly int maxUnits = 3;
 

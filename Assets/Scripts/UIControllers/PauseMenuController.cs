@@ -9,7 +9,7 @@ public class PauseMenuController : MonoBehaviour{
 
     private void Start() {
         _animator = GetComponent<Animator>();
-        _gameController = FindObjectOfType<GameController>();
+        _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     //Toogles the pause panel

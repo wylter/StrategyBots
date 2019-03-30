@@ -39,6 +39,7 @@ public class RamielAbilityBehavior : AbilityBehavior {
         targetSquares = targetSquares.OrderBy(s => (s.OffsetCoord - _unit.Cell.OffsetCoord).magnitude).ToList<Cell>();
     }
 
+
     public override void Use() {
         StartCoroutine(SpawnExplosions());
     }
@@ -59,5 +60,9 @@ public class RamielAbilityBehavior : AbilityBehavior {
         }
 
         _unit.isActing = false;
+    }
+
+    public override void OnUnitSelected(CustomUnit unit) {
+        Debug.LogError("Not usuable option called");
     }
 }
