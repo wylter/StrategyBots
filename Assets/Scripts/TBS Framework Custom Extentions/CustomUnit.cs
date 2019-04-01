@@ -195,6 +195,14 @@ public class CustomUnit : Unit{
         _healthUI.value = HitPoints;
     }
 
+    public void GetHeal(int heal) {
+        ShowHealthAnimation(heal, _gainHealthColor);
+
+        HitPoints += (HitPoints + heal <= TotalHitPoints) ? heal : TotalHitPoints - HitPoints;
+
+        _healthUI.value = HitPoints;
+    }
+
     public override void DealDamage(Unit other) {
         if (isMoving)
             return;

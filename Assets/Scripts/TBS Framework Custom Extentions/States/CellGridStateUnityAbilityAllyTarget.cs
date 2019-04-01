@@ -45,8 +45,20 @@ public class CellGridStateUnityAbilityAllyTarget : CellGridState {
             return;
 
         if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber == _unit.PlayerNumber && _unit.abilityActionUsable) {
-            _unit.ability.OnCellSelected(unit.Cell, _cellGrid.Cells);
+            CustomUnit cUnit = unit as CustomUnit;
+            if (cUnit) {
+                _unit.ability.OnUnitSelected(cUnit);
+            }
             _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
         }
     }
+
+    public override void OnCellDeselected(Cell cell) {
+
+    }
+
+    public override void OnCellSelected(Cell cell) {
+
+    }
+
 }

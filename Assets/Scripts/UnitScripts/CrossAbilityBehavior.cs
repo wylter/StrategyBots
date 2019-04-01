@@ -11,7 +11,7 @@ public class CrossAbilityBehavior : AbilityBehavior {
 
     public override void EnterState(CellGrid cellGrid, CustomUnit unit) {
         base.EnterState(cellGrid, unit);
-        cellGrid.CellGridState = new CellGridStateUnityAbilityTileTarget(cellGrid, unit);
+        cellGrid.CellGridState = new CellGridStateUnityAbilityAllyTarget(cellGrid, unit);
     }
 
     public override void OnCellSelected(Cell cell, List<Cell> gridCells) {
@@ -23,11 +23,14 @@ public class CrossAbilityBehavior : AbilityBehavior {
         _unit.isActing = true;
         _unit.animator.SetTrigger("Ability");
 
+        _unit.RotateUnitTowardPosition(unit.transform.position);
+
         _targetUnit = unit;
     }
 
     public override void Use() {
-        Debug.Log("HEal");
+
+        _targetUnit.GetHeal(_heal);
 
         _unit.isActing = false;
     }
