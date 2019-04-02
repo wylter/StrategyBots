@@ -44,7 +44,7 @@ public class CellGridStateUnityAbilityAllyTarget : CellGridState {
         if (_unit.isMoving)
             return;
 
-        if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber == _unit.PlayerNumber && _unit.abilityActionUsable) {
+        if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber == _unit.PlayerNumber && unit != _unit && _unit.abilityActionUsable) {
             CustomUnit cUnit = unit as CustomUnit;
             if (cUnit) {
                 _unit.ability.OnUnitSelected(cUnit);

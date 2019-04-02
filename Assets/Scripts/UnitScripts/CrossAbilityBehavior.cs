@@ -19,7 +19,7 @@ public class CrossAbilityBehavior : AbilityBehavior {
     }
 
     public override void OnUnitSelected(CustomUnit unit) {
-        unit.abilityActionUsable = false;
+        _unit.abilityActionUsable = false;
         _unit.isActing = true;
         _unit.animator.SetTrigger("Ability");
 
