@@ -9,7 +9,10 @@ public class PauseMenuController : MonoBehaviour{
 
     private void Start() {
         _animator = GetComponent<Animator>();
-        _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        _gameController = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<GameController>();
+
+        Debug.Assert(_animator != null, "Animator not found");
+        Debug.Assert(_gameController != null, "GameController not found");
     }
 
     //Toogles the pause panel

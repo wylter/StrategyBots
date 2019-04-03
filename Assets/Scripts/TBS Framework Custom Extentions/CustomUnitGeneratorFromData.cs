@@ -29,7 +29,7 @@ public class CustomUnitGeneratorFromData : MonoBehaviour, IUnitGenerator {
     }
 
     public List<Unit> SpawnUnits(List<Cell> cells) {
-        _data = GameObject.FindGameObjectWithTag("Data").GetComponent<DataController>();
+        _data = GameObject.FindGameObjectWithTag("Data")?.GetComponent<DataController>();
         Debug.Assert(_data != null, "Data not recived");
         Debug.Assert(_player1SpawnPoints.Count == _data.playersSelection[0].playerUnits.Length, "Not all spawnpoints have been set");
         Debug.Assert(_player2SpawnPoints.Count == _data.playersSelection[1].playerUnits.Length, "Not all spawnpoints have been set");

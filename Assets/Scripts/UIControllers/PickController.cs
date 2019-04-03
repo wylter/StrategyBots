@@ -5,16 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class PickController : MonoBehaviour{
 
-    public static readonly int maxUnits = 3;
-
-    [SerializeField]
-    private LevelLoader _loader = null;
     [SerializeField]
     private int battlegroundLevelIndex = 1;
-    
-
     [SerializeField]
     private DataController _data = null;
+    [SerializeField]
+    private Settings _settings = null;
+
+
+    private LevelLoader _loader = null;
 
     private int[] _playerPicksNumber;
     public int[]  playerPicksNumber { get { return _playerPicksNumber; } }
@@ -24,8 +23,10 @@ public class PickController : MonoBehaviour{
     }
 
     private void Start() {
+        _loader = GameObject.FindGameObjectWithTag("Utility")?.GetComponent<GameUtilitiesManager>()?.levelLoader;
         Debug.Assert(_data != null, "DataController is null");
-        Debug.Assert(_loader != null, "LevelLoader is null");
+        Debug.Assert(_settings != null, "Settings is null");
+        Debug.Assert(_loader != null, "LevelLoader not found");
     }
 
     public void NotifyPick(int playerNumber, UnitClass pick, int spot) {
@@ -42,7 +43,7 @@ public class PickController : MonoBehaviour{
     }
 
     public void Play() {
-        if (playerPicksNumber[0] == maxUnits && playerPicksNumber[1] == maxUnits) {
+        if (playerPicksNumber[0] == _settings.numberOfUnits && playerPicksNumber[1] == _settings.numberOfUnits) {
             _loader.FadeToLevel(battlegroundLevelIndex);
         } else {
             Debug.Log("Player Didnt finish pick fase");

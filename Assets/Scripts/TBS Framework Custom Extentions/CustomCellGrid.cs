@@ -10,6 +10,6 @@ public class CustomCellGrid : CellGrid{
 
     protected override void Initialize() {
         base.Initialize();
-        GetComponent<CustomObstaclesGenerator>().SpawnObstacles();
+        GetComponent<CustomObstaclesGenerator>()?.SpawnObstacles();
     }
 }

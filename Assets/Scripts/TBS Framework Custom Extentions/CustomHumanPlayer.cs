@@ -15,7 +15,18 @@ public class CustomHumanPlayer : HumanPlayer{
 
         playerUnits = new Queue<Unit>();
 
-        GameObject.Find("CellGrid").GetComponent<CellGrid>().UnitAdded += OnUnitAdded;
+        GameObject cellGridObject = GameObject.Find("CellGrid");
+        if (cellGridObject != null) {
+            CellGrid cellGrid = cellGridObject.GetComponent<CellGrid>();
+            if (cellGrid != null) {
+                cellGrid.UnitAdded += OnUnitAdded;
+            } else {
+                Debug.LogError("Cellgrid object doesnt have a \"CellGrid\" script attached");
+            }
+        } else {
+            Debug.LogError("Cellgrid object not found");
+        }
+        
     }
 
     private void OnUnitAdded(object sender, UnitCreatedEventArgs e) {

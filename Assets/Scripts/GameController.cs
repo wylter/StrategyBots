@@ -23,8 +23,10 @@ public class GameController : MonoBehaviour{
     private Color _loseColor = Color.white;
     [SerializeField]
     private string _loseMessage = "YOU LOST";
-    [Header("Utility Elements")]
+    [Header("Settings")]
     [SerializeField]
+    private int _mainMenuSceneIndex = 1;
+
     private LevelLoader _loader = null;
 
     private CustomHumanPlayer _currentPlayer;
@@ -39,6 +41,8 @@ public class GameController : MonoBehaviour{
     }
 
     private void Start() {
+        _loader = GameObject.FindGameObjectWithTag("Utility")?.GetComponent<GameUtilitiesManager>()?.levelLoader;
+        Debug.Assert(_loader != null, "LevelLoader not found");
         Debug.Assert(_uiController.Count == 2, "There should be one UI for each of the 2 players");
         Debug.Assert(_pauseMenu != null, "PauseMenu is null");
         Debug.Assert(_loader != null, "LevelLoader is null");
@@ -140,7 +144,7 @@ public class GameController : MonoBehaviour{
                 break;
 
             case MenuSelectedAction.EXIT:
-                _loader.FadeToLevel(0);
+                _loader.FadeToLevel(_mainMenuSceneIndex);
                 break;
 
             default:

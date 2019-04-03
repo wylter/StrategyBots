@@ -30,7 +30,7 @@ public class PlayerUIController : MonoBehaviour{
     private Animator _animator;
 
     private void Start() {
-        _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        _gameController = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<GameController>();
         _animator = GetComponent<Animator>();
         Debug.Assert(_gameController != null, "GameController not found");
         Debug.Assert(_animator != null, "Animator not found");

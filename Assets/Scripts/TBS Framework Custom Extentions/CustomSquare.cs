@@ -30,11 +30,13 @@ public class CustomSquare : Square{
     public void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _defaultColor = _spriteRenderer.color;
+
+        Debug.Assert(_spriteRenderer != null, "SpriteRenderer not found");
     }
     
 
     public override Vector3 GetCellDimensions() {
-        return GetComponent<SpriteRenderer>().bounds.size;
+        return _spriteRenderer.bounds.size;
     }
 
     public override void MarkAsHighlighted() {

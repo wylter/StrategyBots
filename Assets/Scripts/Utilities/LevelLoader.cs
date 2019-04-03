@@ -8,6 +8,7 @@ public class LevelLoader : MonoBehaviour{
 
     private void Start() {
         _animator = GetComponent<Animator>();
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
     public void FadeToLevel(int levelIndex) {
@@ -17,5 +18,9 @@ public class LevelLoader : MonoBehaviour{
 
     public void OnFadeComplete() {
         SceneManager.LoadScene(levelToLoad);
+    }
+
+    public void OnSceneChanged(Scene current, Scene next) {
+        _animator.SetTrigger("FadeIn");
     }
 }

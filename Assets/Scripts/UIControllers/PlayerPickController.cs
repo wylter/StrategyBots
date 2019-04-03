@@ -16,8 +16,9 @@ public class PlayerPickController : MonoBehaviour{
 
     private void Start() {
         _pickController = FindObjectOfType<PickController>();
-        _occupiedSpots = new bool[PickController.maxUnits];
         Debug.Assert(_settings != null, "Settings not set");
+
+        _occupiedSpots = new bool[_settings.numberOfUnits];
     }
 
     public void NotifyPlayerInput(int pick) {
