@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour{
     }
 
     private void ChangeCurrentPlayer() {
-        _currentPlayer = (CustomHumanPlayer)_cellGrid.CurrentPlayer;
+        _currentPlayer = _cellGrid.CurrentPlayer as CustomHumanPlayer;
         _uiController.ForEach(ui => {
             ui.SetButtonsInteractable(ui.PlayerNumber == _cellGrid.CurrentPlayerNumber);
             if (ui.PlayerNumber == _cellGrid.CurrentPlayerNumber) {
@@ -104,19 +104,19 @@ public class GameController : MonoBehaviour{
         switch (action) {
 
             case PlayerSelectedAction.MOVE:
-                if (currentUnit.MovementPoints > 0) {
+                if (currentUnit != null && currentUnit.MovementPoints > 0) {
                     _cellGrid.CellGridState = new CellGridStateUnitMove(_cellGrid, currentUnit);
                 }
                 break;
 
             case PlayerSelectedAction.ATTACK:
-                if (currentUnit.ActionPoints > 0 && currentUnit.abilityActionUsable) {
+                if (currentUnit != null && currentUnit.ActionPoints > 0 && currentUnit.abilityActionUsable) {
                     _cellGrid.CellGridState = new CellGridStateUnitAttack(_cellGrid, currentUnit);
                 }
                 break;
 
             case PlayerSelectedAction.ABILITY:
-                if (currentUnit.ActionPoints > 0 && currentUnit.abilityActionUsable) {
+                if (currentUnit != null && currentUnit.ActionPoints > 0 && currentUnit.abilityActionUsable) {
                     currentUnit.ability.EnterState(_cellGrid, currentUnit);
                 }
                 break;
