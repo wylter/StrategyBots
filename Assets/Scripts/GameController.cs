@@ -90,6 +90,8 @@ public class GameController : MonoBehaviour{
                 GameOver(unit.PlayerNumber);
             }
         }
+
+        _cellGrid.EndTurn();
     }
 
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
