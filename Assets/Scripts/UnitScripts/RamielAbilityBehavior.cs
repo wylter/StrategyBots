@@ -10,7 +10,7 @@ public class RamielAbilityBehavior : AbilityBehavior {
     [SerializeField]
     private GameObject _explosion = null;
 
-    private List<Cell> targetSquares;
+    private List<Cell> _targetSquares;
 
     private void Start() {
         Debug.Assert(_explosion != null, "Explosion is null");
@@ -32,11 +32,11 @@ public class RamielAbilityBehavior : AbilityBehavior {
 
         Vector2 direction = (cell.OffsetCoord - _unit.Cell.OffsetCoord).normalized;
 
-        targetSquares = gridCells.Where(c =>
+        _targetSquares = gridCells.Where(c =>
             (c.OffsetCoord - _unit.Cell.OffsetCoord).normalized.Equals(direction)
         ).ToList<Cell>();
 
-        targetSquares = targetSquares.OrderBy(s => (s.OffsetCoord - _unit.Cell.OffsetCoord).magnitude).ToList<Cell>();
+        _targetSquares = _targetSquares.OrderBy(s => (s.OffsetCoord - _unit.Cell.OffsetCoord).magnitude).ToList<Cell>();
     }
 
 
@@ -47,7 +47,7 @@ public class RamielAbilityBehavior : AbilityBehavior {
     private IEnumerator SpawnExplosions() {
         WaitForSeconds waitTime = new WaitForSeconds(0.2f);
 
-        foreach (CustomSquare targetSquare in targetSquares) {
+        foreach (CustomSquare targetSquare in _targetSquares) {
             if (targetSquare.isTakenByObstacle)
                 break;
 

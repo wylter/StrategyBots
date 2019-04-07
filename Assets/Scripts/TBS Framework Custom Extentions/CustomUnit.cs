@@ -178,6 +178,7 @@ public class CustomUnit : Unit{
         List<Cell> attackableCells = new List<Cell>(cells);
 
         attackableCells = attackableCells.Where(otherCell => Cell.GetDistance(otherCell) <= range && IsCellInVision(otherCell)).ToList();
+        attackableCells.Remove(Cell);
 
 
         return attackableCells;

@@ -9,7 +9,7 @@ public class TurtleAbilityBehavior : AbilityBehavior {
     [SerializeField]
     private GameObject _explosion = null;
 
-    private List<Cell> targetSquares;
+    private List<Cell> _targetSquares;
 
     private void Start() {
         Debug.Assert(_explosion != null, "Explosion is null");
@@ -28,12 +28,12 @@ public class TurtleAbilityBehavior : AbilityBehavior {
 
         CustomSquare square = cell as CustomSquare;
 
-        targetSquares = square.GetNeighbours(gridCells);
-        targetSquares.Add(cell);
+        _targetSquares = square.GetNeighbours(gridCells);
+        _targetSquares.Add(cell);
     }
 
     public override void Use() {
-        foreach (CustomSquare targetSquare in targetSquares) {
+        foreach (CustomSquare targetSquare in _targetSquares) {
             Instantiate(_explosion, targetSquare.transform.position, Quaternion.identity);
             if (targetSquare.unit && targetSquare.unit.PlayerNumber != _unit.PlayerNumber) {
                 targetSquare.unit.Defend(_unit, _damage);

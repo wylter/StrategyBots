@@ -34,9 +34,9 @@ public class CustomSquare : Square{
         Debug.Assert(_spriteRenderer != null, "SpriteRenderer not found");
     }
     
-
+    //This is access in Edit mode to generate the grid
     public override Vector3 GetCellDimensions() {
-        return _spriteRenderer.bounds.size;
+        return GetComponent<SpriteRenderer>().bounds.size;
     }
 
     public override void MarkAsHighlighted() {
