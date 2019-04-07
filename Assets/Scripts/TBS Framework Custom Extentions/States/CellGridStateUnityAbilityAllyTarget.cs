@@ -49,7 +49,7 @@ public class CellGridStateUnityAbilityAllyTarget : CellGridState {
             if (cUnit) {
                 _unit.ability.OnUnitSelected(cUnit);
             }
-            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid, _unit);
         }
     }
 

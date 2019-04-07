@@ -213,6 +213,7 @@ public class CustomUnit : Unit{
             return;
 
         isActing = true;
+        ActionPoints--;
 
         RotateUnitTowardPosition(other.transform.position);
 
@@ -225,7 +226,6 @@ public class CustomUnit : Unit{
         isActing = false;
 
         MarkAsAttacking(_unitToAttack);
-        ActionPoints--;
         _unitToAttack.Defend(this, AttackFactor);
 
         if (ActionPoints == 0) {

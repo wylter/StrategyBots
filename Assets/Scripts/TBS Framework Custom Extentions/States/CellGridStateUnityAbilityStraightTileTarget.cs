@@ -23,7 +23,7 @@ public class CellGridStateUnityAbilityStraightTileTarget : CellGridState {
 
         if (_attackableCellsInRange.Contains(cell) && _unit.abilityActionUsable) {
             _unit.ability.OnCellSelected(cell, _cellGrid.Cells);
-            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid, _unit);
         }
     }
 
@@ -70,7 +70,7 @@ public class CellGridStateUnityAbilityStraightTileTarget : CellGridState {
 
         if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber != _unit.PlayerNumber && _unit.abilityActionUsable) {
             _unit.ability.OnCellSelected(unit.Cell, _cellGrid.Cells);
-            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid, _unit);
         }
     }
 }

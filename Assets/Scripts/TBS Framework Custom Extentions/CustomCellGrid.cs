@@ -12,4 +12,16 @@ public class CustomCellGrid : CellGrid{
         base.Initialize();
         GetComponent<CustomObstaclesGenerator>()?.SpawnObstacles();
     }
+
+    public void EndTurn(CustomUnit unit) {
+        StartCoroutine(WaitForUnitBeforeSkippingTurn(unit));
+    }
+
+
+    private IEnumerator WaitForUnitBeforeSkippingTurn(CustomUnit unit) {
+        while (unit.isActing) {
+            yield return null;
+        }
+        EndTurn();
+    }
 }

@@ -28,7 +28,7 @@ public class CellGridStateUnityAbilityCircleTileTarget : CellGridState {
 
         if (_attackableCellsInRange.Contains(cell) && _unit.abilityActionUsable) {
             _unit.ability.OnCellSelected(cell, _attackableCellsInRange);
-            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid, _unit);
         }
     }
 
@@ -76,7 +76,7 @@ public class CellGridStateUnityAbilityCircleTileTarget : CellGridState {
 
         if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber != _unit.PlayerNumber && _unit.abilityActionUsable) {
             _unit.ability.OnCellSelected(unit.Cell, _attackableCellsInRange);
-            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid, _unit);
         }
     }
 }

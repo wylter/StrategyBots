@@ -12,7 +12,7 @@ public class CellGridStateUnitAttack : CellGridState {
 
 
     public CellGridStateUnitAttack(CellGrid cellGrid, Unit unit) : base(cellGrid) {
-        _unit = (CustomUnit)unit;
+        _unit = unit as CustomUnit;
         _attackableCellsInRange = new List<Cell>();
     }
 
@@ -57,7 +57,7 @@ public class CellGridStateUnitAttack : CellGridState {
 
         if (_attackableCellsInRange.Contains(unit.Cell) && unit.PlayerNumber != _unit.PlayerNumber && _unit.ActionPoints > 0) {
             _unit.DealDamage(unit);
-            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid);
+            _cellGrid.CellGridState = new CellGridStateWaitingForUnitInput(_cellGrid, _unit);
         }
     }
 }
