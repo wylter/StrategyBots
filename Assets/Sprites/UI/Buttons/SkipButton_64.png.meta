@@ -1,11 +1,8 @@
 fileFormatVersion: 2
-guid: 904daf56e202f304cb99ec7c29611dfc
+guid: 6eb0bc0af72c942428afe9e4a3691208
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Buttons_64_0
-    21300002: Buttons_64_1
-    21300004: Buttons_64_2
-    21300006: Buttons_64_3
+    21300000: Frame004_0
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -49,7 +46,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,85 +81,36 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Buttons_64_0
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 72
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c22e070d6c8686e409512beea2880104
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buttons_64_1
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 72
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9caee44a7b4ab384abd129435f15eafc
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buttons_64_2
+      name: Frame004_0
       rect:
         serializedVersion: 2
         x: 8
         y: 8
         width: 48
-        height: 49
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b39218a00c2c47442ae839aeb11c51e4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Buttons_64_3
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 8
-        width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d3909f58182c1b4c92330fb61a91963
+      spriteID: b4ee79d21187f73449df904ea6eeb5fb
       vertices: []
       indices: 
       edges: []
@@ -170,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ed888e19fc672db4a9e88713607c7952
+    spriteID: f90f4f828f686244ba1bfb7afb500a86
     vertices: []
     indices: 
     edges: []
