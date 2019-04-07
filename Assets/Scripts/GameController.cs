@@ -88,10 +88,12 @@ public class GameController : MonoBehaviour{
 
             if (player.PlayerUnits.Count == 0) {
                 GameOver(unit.PlayerNumber);
+            } else {
+                _cellGrid.EndTurn();
             }
         }
 
-        _cellGrid.EndTurn();
+        
     }
 
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
