@@ -230,7 +230,6 @@ public class CustomUnit : Unit{
 
         if (ActionPoints == 0) {
             SetState(new UnitStateMarkedAsFinished(this));
-            MovementPoints = 0;
         }
     }
 

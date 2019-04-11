@@ -80,6 +80,13 @@ public class GameController : MonoBehaviour{
     }
 
     public void DeregisterUnitFromPlayer(Unit unit) {
+
+        //Checking if the unit that has to be destroyed is the same that has the current turn, in that case the game automatically skips to the next player
+        bool skipAfterDestroy = false;
+        if (_currentPlayer.CurrentUnit == unit) {
+            skipAfterDestroy = true;
+        }
+
         CustomHumanPlayer player = _cellGrid.Players.Find(p => p.PlayerNumber.Equals(unit.PlayerNumber)) as CustomHumanPlayer;
         Debug.Assert(player != null, "Error in retriving the player");
 
@@ -89,11 +96,11 @@ public class GameController : MonoBehaviour{
             if (player.PlayerUnits.Count == 0) {
                 GameOver(unit.PlayerNumber);
             } else {
-                _cellGrid.EndTurn();
+                if (skipAfterDestroy) {
+                    _cellGrid.EndTurn();
+                }
             }
         }
-
-        
     }
 
     public void NotifyPlayerSelectedAction(PlayerSelectedAction action) {
