@@ -95,10 +95,8 @@ public class GameController : MonoBehaviour{
 
             if (player.PlayerUnits.Count == 0) {
                 GameOver(unit.PlayerNumber);
-            } else {
-                if (skipAfterDestroy) {
-                    _cellGrid.EndTurn();
-                }
+            } else if (skipAfterDestroy) {
+                _cellGrid.EndTurn();
             }
         }
     }

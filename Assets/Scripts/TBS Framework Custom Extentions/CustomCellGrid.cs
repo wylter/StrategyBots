@@ -22,6 +22,14 @@ public class CustomCellGrid : CellGrid{
         while (unit.isActing) {
             yield return null;
         }
+
+        yield return null;
+
+        foreach (CustomHumanPlayer player in Players) {
+            if (player && player.PlayerUnits.Count == 0)
+                yield break;
+        }
+
         EndTurn();
     }
 }
