@@ -60,7 +60,9 @@ public class CellGridStateUnityAbilityStraightTileTarget : CellGridState {
         _unit.OnUnitDeselected();
 
         foreach (var cell in _cellGrid.Cells) {
-            cell.UnMark();
+            if (_unit.Cell != cell) {
+                cell.UnMark();
+            }
         }
     }
 

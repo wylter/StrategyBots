@@ -60,7 +60,9 @@ public class CellGridStateUnitMove : CellGridState {
         var cellsNotInRange = _cellGrid.Cells.Except(_pathsInRange);
 
         foreach (var cell in cellsNotInRange) {
-            cell.UnMark();
+            if (_unit.Cell != cell) {
+                cell.UnMark();
+            }
         }
         foreach (var cell in _pathsInRange) {
             cell.MarkAsReachable();
@@ -74,7 +76,9 @@ public class CellGridStateUnitMove : CellGridState {
         _unit.OnUnitDeselected();
 
         foreach (var cell in _cellGrid.Cells) {
-            cell.UnMark();
+            if (_unit.Cell != cell) {
+                cell.UnMark();
+            }
         }
     }
 }

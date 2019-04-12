@@ -85,7 +85,9 @@ class CellGridStateUnitSelected : CellGridState
 
         foreach (var cell in cellsNotInRange)
         {
-            cell.UnMark();
+            if (_unit.Cell != cell) {
+                cell.UnMark();
+            }
         }
         foreach (var cell in _pathsInRange)
         {
@@ -120,7 +122,9 @@ class CellGridStateUnitSelected : CellGridState
         }
         foreach (var cell in _cellGrid.Cells)
         {
-            cell.UnMark();
+            if (_unit.Cell != cell) {
+                cell.UnMark();
+            }
         }   
     }
 }
