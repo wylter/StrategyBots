@@ -19,9 +19,6 @@ public class SoundController : MonoBehaviour {
 
     private bool _isSource0Playing = true;
 
-    private bool _isMuted = false;
-    public bool isMuted { get { return _isMuted; } }
-
     private Coroutine _zerothSourceFadeRoutine = null;
     private Coroutine _firstSourceFadeRoutine = null;
 
@@ -123,8 +120,17 @@ public class SoundController : MonoBehaviour {
         }
     }
 
-    public void ToggleSound() {
-        _isMuted = !_isMuted;
-        audioMixer.SetFloat("MasterVolume", _isMuted ? MUTEDVOLUME : _defaultVolume);
+    public void ToggleSound(SoundNotification option) {
+        switch (option) {
+            case SoundNotification.ON:
+                audioMixer.SetFloat("MasterVolume", _defaultVolume);
+                break;
+            case SoundNotification.OFF:
+                audioMixer.SetFloat("MasterVolume", MUTEDVOLUME);
+                break;
+            default:
+                Debug.Assert(false, "Not implemented option detected");
+                break;
+        }
     }
 }
