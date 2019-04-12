@@ -1,17 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
     [SerializeField]
-    private Animator pickAnimator = null;
+    private Animator _pickAnimator = null;
+    [SerializeField]
+    private Button _soundButton = null;
+
+    private SoundController _soundController;
 
     public void Start() {
-        Debug.Assert(pickAnimator != null, "PickAnimator is null");
+        _soundController = GameObject.FindGameObjectWithTag("Utility")?.GetComponent<GameUtilitiesManager>()?.soundController;
+        Debug.Assert(_pickAnimator != null, "PickAnimator is null");
+        Debug.Assert(_soundButton != null, "SoundButton is null");
     }
 
     public void TogglePickMenu(bool enabled) {
-        pickAnimator.SetBool("MenuOn", enabled);
+        _pickAnimator.SetBool("MenuOn", enabled);
     }
+
+    public void ToggleSound() {
+        _soundController.ToggleSound();
+    }
+
+
 }

@@ -4,6 +4,9 @@ using System.Collections;
 
 public class SoundController : MonoBehaviour {
 
+    private static float MUTEDVOLUME = -80f;
+    private float _defaultVolume = 0f;
+
     [SerializeField]
     private AudioMixer audioMixer = null;                  //Reference to the audio mixer of the project
     [SerializeField]
@@ -15,6 +18,9 @@ public class SoundController : MonoBehaviour {
     private AudioSource _source1 = null;
 
     private bool _isSource0Playing = true;
+
+    private bool _isMuted = false;
+    public bool isMuted { get { return _isMuted; } }
 
     private Coroutine _zerothSourceFadeRoutine = null;
     private Coroutine _firstSourceFadeRoutine = null;
@@ -28,6 +34,9 @@ public class SoundController : MonoBehaviour {
         Debug.Assert(_source0.clip != null, "No starting song inserted");
         _source0.enabled = true;
         _source1.enabled = false;
+
+        audioMixer.GetFloat("MasterVolume", out _defaultVolume);
+        Debug.Assert(audioMixer.GetFloat("MasterVolume", out _defaultVolume), "MasterVolume exposed value not found in the audio mixer");
     }
 
     public void SetVolume(float volume) {
@@ -112,5 +121,10 @@ public class SoundController : MonoBehaviour {
             sourceToFade.enabled = false;
             sourceToFade.clip = null;
         }
+    }
+
+    public void ToggleSound() {
+        _isMuted = !_isMuted;
+        audioMixer.SetFloat("MasterVolume", _isMuted ? MUTEDVOLUME : _defaultVolume);
     }
 }
