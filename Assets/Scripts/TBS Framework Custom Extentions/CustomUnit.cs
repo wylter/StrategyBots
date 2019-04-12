@@ -71,6 +71,12 @@ public class CustomUnit : Unit{
     public override void OnTurnStart() {
         base.OnTurnStart();
         _abilityActionUsable = true;
+        Cell.MarkAsHighlighted();
+    }
+
+    public override void OnTurnEnd() {
+        base.OnTurnEnd();
+        Cell.UnMark();
     }
 
     protected override void OnMouseEnter() {
@@ -136,6 +142,8 @@ public class CustomUnit : Unit{
 
     public override void Move(Cell destinationCell, List<Cell> path) {
 
+        Cell.UnMark();
+
         CustomSquare currentSquare = Cell as CustomSquare;
         if (currentSquare) {
             currentSquare.unit = null;
@@ -167,6 +175,8 @@ public class CustomUnit : Unit{
             }
         }
         isMoving = isActing = false;
+
+        Cell.MarkAsHighlighted();
     }
 
     public List<Cell> GetAvailableAttackableCells(List<Cell> cells) {

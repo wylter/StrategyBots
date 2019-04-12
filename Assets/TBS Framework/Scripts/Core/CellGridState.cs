@@ -32,7 +32,7 @@ public abstract class CellGridState
     /// <param name="cell">Cell that was selected.</param>
     public virtual void OnCellSelected(Cell cell)
     {
-        cell.MarkAsHighlighted();
+        
     }
 
     /// <summary>
