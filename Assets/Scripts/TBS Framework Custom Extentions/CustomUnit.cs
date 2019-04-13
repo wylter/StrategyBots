@@ -44,6 +44,9 @@ public class CustomUnit : Unit{
     private bool _abilityActionUsable;
     public bool abilityActionUsable { get { return _abilityActionUsable; } set { _abilityActionUsable = value;} }
 
+    private bool _isAnimating = false;
+    public bool isAnimating { get { return _isAnimating; } set { _isAnimating = value; } }
+
     private Unit _unitToAttack = null;
 
     private void Start() {
@@ -91,7 +94,7 @@ public class CustomUnit : Unit{
     }
 
     private IEnumerator DestroyWhenStopped() {
-        while (isActing) {
+        while (isActing || _isAnimating) {
             yield return null;
         }
 

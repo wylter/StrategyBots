@@ -105,7 +105,7 @@ public class GameController : MonoBehaviour{
 
         CustomUnit currentUnit = _currentPlayer.CurrentUnit as CustomUnit;
 
-        if (currentUnit.isActing == true) {
+        if (currentUnit.isActing == true || currentUnit.isAnimating) {
             Debug.Log("Cannot do actions while the unit is acting");
             return;
         }
