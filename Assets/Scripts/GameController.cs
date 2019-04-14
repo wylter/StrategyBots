@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour{
     private Color _loseColor = Color.white;
     [SerializeField]
     private string _loseMessage = "YOU LOST";
+    [SerializeField]
+    private Animator _backButtonAnimator = null;
     [Header("Settings")]
     [SerializeField]
     private int _mainMenuSceneIndex = 1;
@@ -46,6 +48,7 @@ public class GameController : MonoBehaviour{
         Debug.Assert(_uiController.Count == 2, "There should be one UI for each of the 2 players");
         Debug.Assert(_pauseMenu != null, "PauseMenu is null");
         Debug.Assert(_loader != null, "LevelLoader is null");
+        Debug.Assert(_backButtonAnimator != null, "BackButtonAnimator is null");
     }
 
     private void onLevelLoading(object sender, EventArgs e){
@@ -174,6 +177,8 @@ public class GameController : MonoBehaviour{
             }
             ui.SetButtonsInteractable(false);
         });
+
+        _backButtonAnimator.SetTrigger("In");
     }
 
 }
