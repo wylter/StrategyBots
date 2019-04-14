@@ -17,7 +17,7 @@ public class CustomCellGrid : CellGrid{
 
     public void EndTurn(CustomUnit unit) {
         //If turn is already ending no need to skip again
-        if (_isTurnEnding) {
+        if (!_isTurnEnding) {
             StartCoroutine(WaitForUnitBeforeSkippingTurn(unit));
         }
     }

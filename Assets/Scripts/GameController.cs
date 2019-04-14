@@ -97,6 +97,7 @@ public class GameController : MonoBehaviour{
                 GameOver(unit.PlayerNumber);
             } else if (skipAfterDestroy) {
                 _cellGrid.EndTurn();
+                Debug.Log("Turnskip by destruction called by " + unit.name);
             }
         }
     }
