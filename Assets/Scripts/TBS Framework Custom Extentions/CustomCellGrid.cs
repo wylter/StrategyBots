@@ -26,7 +26,7 @@ public class CustomCellGrid : CellGrid{
     private IEnumerator WaitForUnitBeforeSkippingTurn(CustomUnit unit) {
         _isTurnEnding = true;
 
-        while (unit.isActing) {
+        while (unit.isActing || unit.isAnimating) {
             yield return null;
         }
 

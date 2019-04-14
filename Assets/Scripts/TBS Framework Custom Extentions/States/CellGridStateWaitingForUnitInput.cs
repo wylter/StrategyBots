@@ -7,7 +7,7 @@ public class CellGridStateWaitingForUnitInput : CellGridState {
 
         if (unit.MovementPoints == 0 && (!unit.abilityActionUsable || unit.ActionPoints == 0)) {
             CustomCellGrid grid = cellGrid as CustomCellGrid;
-            grid?.EndTurn(unit);
+            grid?.EndTurn(unit); 
         }
     }
 

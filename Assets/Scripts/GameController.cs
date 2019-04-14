@@ -8,8 +8,8 @@ public class GameController : MonoBehaviour{
 
     [Header("Elements")]
     [SerializeField]
-    private CellGrid _cellGrid; //Reference to the CellGrid in the scene
-    public CellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
+    private CustomCellGrid _cellGrid; //Reference to the CellGrid in the scene
+    public CustomCellGrid cellGrid { get { return _cellGrid; } set { _cellGrid = value; } }
     [Header("UI Elements")]
     [SerializeField]
     private List<PlayerUIController> _uiController = null; //List of ui of the players
@@ -99,8 +99,11 @@ public class GameController : MonoBehaviour{
             if (player.PlayerUnits.Count == 0) {
                 GameOver(unit.PlayerNumber);
             } else if (skipAfterDestroy) {
-                _cellGrid.EndTurn();
-                Debug.Log("Turnskip by destruction called by " + unit.name);
+                CustomUnit cUnit = unit as CustomUnit;
+                if (cUnit) {
+                    _cellGrid.EndTurn(cUnit);
+                    Debug.Log("Turnskip by destruction called by " + unit.name);
+                }
             }
         }
     }
@@ -109,7 +112,7 @@ public class GameController : MonoBehaviour{
 
         CustomUnit currentUnit = _currentPlayer.CurrentUnit as CustomUnit;
 
-        if (currentUnit.isActing == true || currentUnit.isAnimating) {
+        if (currentUnit.isActing || currentUnit.isAnimating) {
             Debug.Log("Cannot do actions while the unit is acting");
             return;
         }

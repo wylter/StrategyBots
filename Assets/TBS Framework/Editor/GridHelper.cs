@@ -187,7 +187,7 @@ class GridHelper : EditorWindow
         unitGenerator.CellsParent = cellGrid.transform;
 
         var guiControllerScript = guiController.AddComponent<GameController>();
-        guiControllerScript.cellGrid = cellGridScript;
+        guiControllerScript.cellGrid = cellGridScript as CustomCellGrid;
         
         foreach (var fieldName in parameterValues.Keys)
         {
