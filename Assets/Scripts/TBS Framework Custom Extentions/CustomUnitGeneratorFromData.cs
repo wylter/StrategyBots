@@ -50,6 +50,8 @@ public class CustomUnitGeneratorFromData : MonoBehaviour, IUnitGenerator {
             ret.Add(unit);
         }
 
+        Destroy(_data.gameObject);
+
         return ret;
     }
 
